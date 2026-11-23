@@ -1,0 +1,9 @@
+<svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 48 48" aria-hidden="true">
+  <rect x="9" y="5" width="26" height="15" rx="3" fill="var(--accent)" transform="rotate(-8 22 12)" />
+  <rect x="4" y="12" width="40" height="31" rx="9" fill="var(--logo-body)" />
+  <path d="M14 22h11M14 22v13M14 28h8" stroke="var(--logo-ink)" stroke-width="3.6" stroke-linecap="round" fill="none" />
+  <circle cx="35" cy="28" r="3.2" fill="var(--accent)" />
+</svg>
+@if (showName()) {
+  <span class="name">FinApp</span>
+}

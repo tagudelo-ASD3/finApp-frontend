@@ -1,0 +1,19 @@
+<fa-dialog [title]="'budgets.editLimits' | translate" [width]="520">
+  <p class="muted intro">{{ 'budgets.editHint' | translate }}</p>
+  <ul class="list">
+    @for (limit of draft(); track limit.categoryId; let i = $index) {
+      <li class="list-item">
+        <span class="icon-tile"><fa-icon [name]="movements.category(limit.categoryId).icon" [size]="18" /></span>
+        <span class="list-item__main"><strong>{{ movements.category(limit.categoryId).name }}</strong></span>
+        <input class="input limit" type="number" min="0" step="10000" [value]="limit.limit"
+          [attr.aria-label]="movements.category(limit.categoryId).name"
+          (input)="setLimit(i, $any($event.target).valueAsNumber)" />
+      </li>
+    }
+  </ul>
+  <div class="pill-row pill-row--soft total">
+    <span class="muted pill-row__text">{{ 'budgets.totalMonthly' | translate }}</span>
+    <strong class="amount amount--md">{{ total() | copCurrency }}</strong>
+  </div>
+  <button type="button" class="btn btn--primary btn--block" (click)="save()">{{ 'budgets.saveLimits' | translate }}</button>
+</fa-dialog>

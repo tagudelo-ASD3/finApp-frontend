@@ -1,0 +1,155 @@
+<div class="page">
+  <fa-page-header
+    [title]="(greetingKey() | translate) + ', ' + firstName()"
+    [subtitle]="today | date: 'EEEE, d \'de\' MMMM \'de\' y'"
+  >
+    <button primary type="button" class="btn btn--primary" (click)="ui.open('new-movement')">
+      <fa-icon name="plus" [size]="18" />
+      {{ 'movements.new' | translate }}
+    </button>
+  </fa-page-header>
+
+  <div class="dashboard">
+    <section class="card card--hero balance">
+      <div class="row row--between">
+        <span class="label">{{ 'dashboard.totalBalance' | translate }}</span>
+        <span class="chip chip--strong">
+          {{ 'dashboard.monthBalance' | translate }} {{ movements.monthBalance() | copCurrency: 'signed' }}
+        </span>
+      </div>
+      <p class="amount amount--xl">{{ accounts.totalAvailable() | copCurrency }}</p>
+      <div class="mini-accounts">
+        @for (account of accounts.moneyAccounts(); track account.id) {
+          <a class="mini-account" routerLink="/accounts">
+            <span class="initials initials--sm initials--on-hero">{{ account.initials }}</span>
+            <span class="faint">{{ account.name }}</span>
+            <strong class="amount">{{ account.balance | copCurrency }}</strong>
+          </a>
+        }
+      </div>
+      <p class="faint">{{ 'dashboard.autoToday' | translate: { count: movements.autoRegisteredToday() } }}</p>
+    </section>
+
+    <div class="column side-stats">
+      <section class="card card--stack stat">
+        <div class="row row--between">
+          <span class="label">{{ 'dashboard.monthIncome' | translate }}</span>
+          <span class="chip">{{ incomeChange() > 0 ? '+' : '' }}{{ incomeChange() }} %</span>
+        </div>
+        <p class="amount amount--lg">{{ movements.monthIncome() | copCurrency }}</p>
+        <div class="bars" aria-hidden="true">
+          @for (bar of incomeBars(); track $index; let last = $last) {
+            <span [style.height.%]="bar" [class.is-strong]="last"></span>
+          }
+        </div>
+      </section>
+      <section class="card card--stack stat">
+        <div class="row row--between">
+          <span class="label">{{ 'dashboard.monthExpense' | translate }}</span>
+          <span class="chip">{{ expenseChange() > 0 ? '+' : '' }}{{ expenseChange() }} %</span>
+        </div>
+        <p class="amount amount--lg">{{ movements.monthExpense() | copCurrency }}</p>
+        <div class="bars" aria-hidden="true">
+          @for (bar of expenseBars(); track $index; let last = $last) {
+            <span [style.height.%]="bar" [class.is-strong]="last"></span>
+          }
+        </div>
+      </section>
+    </div>
+
+    <section class="card recent">
+      <div class="card__header">
+        <h2>{{ 'dashboard.recentMovements' | translate }}</h2>
+        <a class="link" routerLink="/movements">{{ 'common.seeAll' | translate }}</a>
+      </div>
+      <ul class="list">
+        @for (movement of recentMovements(); track movement.id) {
+          <li>
+            <a class="list-item list-item--link" [routerLink]="['/movements', movement.id]">
+              <span class="initials">{{ accounts.byId(movement.accountId)?.initials }}</span>
+              <span class="list-item__main">
+                <strong>{{ movement.description }}</strong>
+                <span class="faint">
+                  {{ accounts.byId(movement.accountId)?.name }} · {{ movement.date | relativeDate: true }}
+                </span>
+              </span>
+              <span class="stack stack--end">
+                <strong class="amount" [class.positive]="movement.type === 'income'">
+                  {{ (movement.type === 'income' ? movement.amount : -movement.amount) | copCurrency: 'signed' }}
+                </strong>
+                <span class="faint">{{ 'movements.source.' + movement.source | translate }}</span>
+              </span>
+            </a>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <div class="column">
+      @if (debts.nextPayment(); as next) {
+        <section class="card next-payment">
+          <div class="days">
+            <strong>{{ next.daysLeft }}</strong>
+            <span>{{ 'common.days' | translate }}</span>
+          </div>
+          <div class="stack grow">
+            <span class="faint">{{ 'dashboard.nextPayment' | translate }} · {{ next.date | date: 'd MMM' }}</span>
+            <strong>{{ next.name }}</strong>
+            <span class="amount amount--md">{{ next.amount | copCurrency }}</span>
+          </div>
+          <button type="button" class="btn btn--primary" (click)="payNextPayment()">{{ 'dashboard.pay' | translate }}</button>
+        </section>
+      }
+
+      @if (suggestion(); as tip) {
+        <section class="card card--soft tip">
+          <div class="row">
+            <span class="icon-tile icon-tile--surface"><fa-icon name="sparkles" [size]="18" /></span>
+            <strong>{{ 'dashboard.tipTitle' | translate }}</strong>
+          </div>
+          <p class="tip__text">
+            {{ 'dashboard.tipText' | translate: { extra: (tip.extra | copCurrency), debt: tip.debtName, savings: (tip.savings | copCurrency) } }}
+          </p>
+          <a class="link" routerLink="/debts/plan">{{ 'dashboard.seePlan' | translate }} →</a>
+        </section>
+      }
+    </div>
+
+    <div class="column">
+      <section class="card">
+        <div class="card__header">
+          <h2>{{ 'dashboard.budgetOf' | translate: { month: (today | date: 'MMMM') } }}</h2>
+          <span class="chip">{{ budgets.percentUsed() }} %</span>
+        </div>
+        <p>
+          <strong>{{ budgets.totalSpent() | copCurrency }}</strong>
+          <span class="muted"> {{ 'common.of' | translate }} {{ budgets.totalLimit() | copCurrency }}</span>
+        </p>
+        <div class="progress spaced">
+          <div class="progress__bar" [style.width.%]="budgets.percentUsed() > 100 ? 100 : budgets.percentUsed()"></div>
+        </div>
+        <div class="chip-group">
+          @for (item of topBudgets(); track item.category.id) {
+            <span class="chip" [class.chip--bad]="item.status === 'over'" [class.chip--warn]="item.status === 'near'">
+              {{ item.category.name }} {{ item.percent }} %
+            </span>
+          }
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__header">
+          <h2>{{ 'nav.debts' | translate }}</h2>
+          <a class="link" routerLink="/debts">{{ 'common.see' | translate }}</a>
+        </div>
+        <p class="amount amount--lg">{{ debts.totalDebt() | copCurrency }}</p>
+        <div class="progress spaced">
+          <div class="progress__bar progress__bar--accent" [style.width.%]="debts.totalPaidPercent()"></div>
+        </div>
+        <p class="faint">
+          {{ 'dashboard.debtProgress' | translate: { percent: debts.totalPaidPercent(), months: plan().months } }}
+        </p>
+      </section>
+    </div>
+  </div>
+</div>

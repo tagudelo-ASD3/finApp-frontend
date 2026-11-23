@@ -1,0 +1,138 @@
+<div class="page">
+  <fa-page-header [title]="'profile.title' | translate" [subtitle]="'profile.subtitle' | translate">
+    <button primary type="button" class="btn" (click)="logout()">
+      <fa-icon name="logout" [size]="18" />
+      {{ 'profile.logout' | translate }}
+    </button>
+  </fa-page-header>
+
+  <div class="grid grid--side-main">
+    <div class="stack stack--lg">
+      <section class="card card--hero card--stack identity">
+        <span class="avatar avatar--lg">{{ initials() }}</span>
+        <h2>{{ profile().fullName }}</h2>
+        <span class="faint">{{ profile().email }}</span>
+        <span class="chip chip--strong">
+          {{ 'profile.memberSince' | translate }} {{ profile().memberSince | date: 'MMMM y' }}
+        </span>
+      </section>
+
+      <section class="card">
+        <h2>{{ 'profile.linked' | translate }}</h2>
+        <ul class="list">
+          <li class="list-item">
+            <span class="initials initials--sm">G</span>
+            <span class="list-item__main">
+              <strong>Google</strong>
+              <span class="faint">{{ profile().linkedGoogle ?? ('profile.notLinked' | translate) }}</span>
+            </span>
+            <span class="chip" [class.chip--good]="profile().linkedGoogle">
+              {{ (profile().linkedGoogle ? 'profile.connected' : 'profile.connect') | translate }}
+            </span>
+          </li>
+          <li class="list-item">
+            <span class="initials initials--sm">A</span>
+            <span class="list-item__main">
+              <strong>Apple</strong>
+              <span class="faint">{{ profile().linkedApple ?? ('profile.notLinked' | translate) }}</span>
+            </span>
+            <span class="chip" [class.chip--good]="profile().linkedApple">
+              {{ (profile().linkedApple ? 'profile.connected' : 'profile.connect') | translate }}
+            </span>
+          </li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="stack stack--lg">
+      <section class="card">
+        <h2>{{ 'profile.personalData' | translate }}</h2>
+        <dl class="facts">
+          <div>
+            <dt>{{ 'profile.fullName' | translate }}</dt>
+            <dd>{{ profile().fullName }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'profile.email' | translate }}</dt>
+            <dd>{{ profile().email }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'profile.phone' | translate }}</dt>
+            <dd>{{ profile().phone }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'profile.document' | translate }}</dt>
+            <dd>{{ profile().document }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'profile.city' | translate }}</dt>
+            <dd>{{ profile().city }}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="card">
+        <h2>{{ 'profile.preferences' | translate }}</h2>
+        <dl class="facts">
+          <div>
+            <dt>{{ 'profile.currency' | translate }}</dt>
+            <dd>{{ preferences().currency }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'profile.monthStart' | translate }}</dt>
+            <dd>{{ 'profile.dayOfMonth' | translate: { day: preferences().monthStartDay } }}</dd>
+          </div>
+        </dl>
+        <ul class="list">
+          <li class="list-item">
+            <span class="list-item__main">
+              <strong>{{ 'profile.paymentReminders' | translate }}</strong>
+              <span class="faint">{{ 'profile.paymentRemindersHint' | translate }}</span>
+            </span>
+            <label class="switch">
+              <input type="checkbox" [checked]="preferences().paymentReminders" (change)="toggle('paymentReminders')"
+                [attr.aria-label]="'profile.paymentReminders' | translate" />
+              <span></span>
+            </label>
+          </li>
+          <li class="list-item">
+            <span class="list-item__main">
+              <strong>{{ 'nav.darkMode' | translate }}</strong>
+            </span>
+            <label class="switch">
+              <input type="checkbox" [checked]="theme.isDark()" (change)="theme.toggle()" [attr.aria-label]="'nav.darkMode' | translate" />
+              <span></span>
+            </label>
+          </li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>{{ 'profile.security' | translate }}</h2>
+        <ul class="list">
+          @for (key of securityOptions; track key) {
+            <li class="list-item">
+              <span class="list-item__main">
+                <strong>{{ 'profile.' + key | translate }}</strong>
+                <span class="faint">{{ 'profile.' + key + 'Hint' | translate }}</span>
+              </span>
+              <label class="switch">
+                <input type="checkbox" [checked]="preferences()[key]" (change)="toggle(key)"
+                  [attr.aria-label]="'profile.' + key | translate" />
+                <span></span>
+              </label>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="card card--dashed card--stack">
+        <h2>{{ 'profile.demoTitle' | translate }}</h2>
+        <p class="muted">{{ 'profile.demoText' | translate }}</p>
+        <div>
+          <button type="button" class="btn" (click)="resetDemoData()">{{ 'profile.resetDemo' | translate }}</button>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>

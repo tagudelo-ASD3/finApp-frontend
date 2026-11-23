@@ -1,0 +1,31 @@
+.progress {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+// Progress bar placed on a hero (dark) card.
+.progress--on-hero {
+  background: var(--surface-3);
+}
+
+.progress__bar {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+  transition: width 0.4s ease;
+}
+
+.progress__bar--accent {
+  background: var(--accent);
+}
+
+.progress__bar--warn {
+  background: var(--warn);
+}
+
+.progress__bar--bad {
+  background: var(--bad);
+}

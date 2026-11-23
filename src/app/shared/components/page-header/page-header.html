@@ -1,0 +1,44 @@
+<header class="header">
+  <div class="header__titles">
+    @if (backLink(); as link) {
+      <a class="back" [routerLink]="link">
+        <fa-icon name="arrow-left" [size]="16" />
+        {{ backLabel() | translate }}
+      </a>
+    }
+    <h1>{{ title() }}</h1>
+    @if (subtitle()) {
+      <p class="muted capitalize">{{ subtitle() }}</p>
+    }
+  </div>
+
+  <div class="header__actions">
+    <ng-content select="[secondary]" />
+
+    <form class="search-box search" role="search" (submit)="$event.preventDefault(); search()">
+      <fa-icon name="search" [size]="18" />
+      <label class="visually-hidden" for="global-search">{{ 'header.search' | translate }}</label>
+      <input
+        id="global-search"
+        type="search"
+        [placeholder]="'header.search' | translate"
+        [value]="query()"
+        (input)="query.set($any($event.target).value)"
+      />
+    </form>
+
+    <button
+      type="button"
+      class="btn btn--icon bell"
+      [attr.aria-label]="'header.notifications' | translate"
+      (click)="openNotifications()"
+    >
+      <fa-icon name="bell" />
+      @if (unread() > 0) {
+        <span class="bell__badge">{{ unread() }}</span>
+      }
+    </button>
+
+    <ng-content select="[primary]" />
+  </div>
+</header>

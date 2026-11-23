@@ -1,0 +1,75 @@
+@use 'abstracts/breakpoints' as bp;
+
+.history {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 12px;
+  height: 220px;
+}
+
+.history__month {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  &.is-current .faint {
+    color: var(--ink);
+    font-weight: 800;
+  }
+}
+
+.history__bars {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.history__bar {
+  width: 18px;
+  min-height: 4px;
+  border-radius: 8px 8px 4px 4px;
+}
+
+.history__bar--income {
+  background: var(--primary);
+}
+
+.history__bar--expense {
+  background: var(--accent);
+}
+
+.donut-layout {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.donut {
+  flex: none;
+  width: 160px;
+  height: 160px;
+  transform: rotate(-90deg);
+
+  circle {
+    fill: none;
+    stroke-width: 16;
+  }
+}
+
+.list-item__main.stack--md {
+  gap: 8px;
+}
+
+@include bp.down(sm) {
+  .donut-layout {
+    flex-direction: column;
+  }
+
+  .history__bar {
+    width: 10px;
+  }
+}

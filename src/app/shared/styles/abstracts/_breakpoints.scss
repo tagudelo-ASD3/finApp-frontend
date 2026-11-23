@@ -1,0 +1,17 @@
+@use 'sass:map';
+
+// Breakpoints shared by global styles and component styles.
+// Usage in a component: @use 'abstracts/breakpoints' as bp;  @include bp.down(md) { ... }
+
+$breakpoints: (
+  sm: 520px,
+  md: 720px,
+  lg: 960px,
+  xl: 1180px,
+);
+
+@mixin down($name) {
+  @media (max-width: map.get($breakpoints, $name)) {
+    @content;
+  }
+}

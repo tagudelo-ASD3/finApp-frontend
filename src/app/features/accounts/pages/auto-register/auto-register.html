@@ -1,0 +1,85 @@
+<div class="page">
+  <fa-page-header
+    [title]="'autoRegister.title' | translate"
+    [subtitle]="'autoRegister.subtitle' | translate"
+    backLink="/accounts"
+    backLabel="nav.accounts"
+  />
+
+  <div class="grid grid--side-main">
+    <section class="card card--hero card--stack intro">
+      <span class="icon-tile icon-tile--lg icon-tile--accent"><fa-icon name="zap" [size]="26" /></span>
+      <h2>{{ 'autoRegister.heroTitle' | translate }}</h2>
+      <p class="faint">{{ 'autoRegister.heroText' | translate }}</p>
+
+      <div class="example">
+        <span class="faint">{{ 'autoRegister.exampleLabel' | translate }}</span>
+        <div class="bubble">{{ 'autoRegister.exampleSms' | translate }}</div>
+        <fa-icon name="chevron-down" />
+        <div class="bubble bubble--result">
+          <strong>Mercado Éxito</strong>
+          <span>- $ 86.400 · Mercado · Nequi</span>
+        </div>
+      </div>
+
+      <div class="privacy">
+        <fa-icon name="shield" [size]="18" />
+        <span>{{ 'autoRegister.privacy' | translate }}</span>
+      </div>
+    </section>
+
+    <div class="stack stack--lg">
+      <section class="card">
+        <div class="card__header">
+          <h2>{{ 'autoRegister.appsTitle' | translate }}</h2>
+          <span class="chip">{{ 'autoRegister.appsActive' | translate: { count: accounts.enabledAlertApps().length } }}</span>
+        </div>
+        <ul class="list">
+          @for (app of accounts.alertApps(); track app.id) {
+            <li class="list-item">
+              <span class="initials initials--sm">{{ app.initials }}</span>
+              <span class="list-item__main"><strong>{{ app.name }}</strong></span>
+              <label class="switch">
+                <input type="checkbox" [checked]="app.enabled" (change)="toggle(app.id)" [attr.aria-label]="app.name" />
+                <span></span>
+              </label>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="card">
+        <div class="card__header">
+          <h2>{{ 'autoRegister.howTitle' | translate }}</h2>
+          <div class="segmented" role="group">
+            <button type="button" [class.is-active]="platform() === 'android'" (click)="platform.set('android')">Android</button>
+            <button type="button" [class.is-active]="platform() === 'iphone'" (click)="platform.set('iphone')">iPhone</button>
+          </div>
+        </div>
+
+        <ol class="steps">
+          @for (step of platform() === 'android' ? androidSteps : iphoneSteps; track step) {
+            <li>
+              <span class="steps__number">{{ step }}</span>
+              <div class="stack">
+                <strong>{{ 'autoRegister.' + platform() + '.step' + step + 'Title' | translate }}</strong>
+                <span class="muted">{{ 'autoRegister.' + platform() + '.step' + step + 'Text' | translate }}</span>
+              </div>
+            </li>
+          }
+        </ol>
+
+        @if (permissionGranted()) {
+          <div class="notice notice--good">
+            <fa-icon name="check" />
+            {{ 'autoRegister.' + platform() + '.done' | translate }}
+          </div>
+        } @else {
+          <button type="button" class="btn btn--primary btn--block" (click)="grantPermission()">
+            {{ 'autoRegister.' + platform() + '.cta' | translate }}
+          </button>
+        }
+      </section>
+    </div>
+  </div>
+</div>

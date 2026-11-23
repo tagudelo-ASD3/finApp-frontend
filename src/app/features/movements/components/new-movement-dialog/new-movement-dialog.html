@@ -1,0 +1,60 @@
+<fa-dialog [title]="'movements.new' | translate">
+  <form class="form" (ngSubmit)="save()">
+    <div class="segmented" role="group">
+      <button type="button" [class.is-active]="type() === 'expense'" (click)="setType('expense')">
+        {{ 'movements.type.expense' | translate }}
+      </button>
+      <button type="button" [class.is-active]="type() === 'income'" (click)="setType('income')">
+        {{ 'movements.type.income' | translate }}
+      </button>
+    </div>
+
+    <label class="field">
+      <span>{{ 'movements.amount' | translate }}</span>
+      <input class="input input--amount" type="number" name="amount" min="1" step="50" placeholder="0"
+        [(ngModel)]="amount" required />
+    </label>
+
+    <label class="field">
+      <span>{{ 'movements.description' | translate }}</span>
+      <input class="input" name="description" [placeholder]="'movements.descriptionPlaceholder' | translate"
+        [(ngModel)]="description" />
+    </label>
+
+    @if (type() === 'expense') {
+      <div class="field">
+        <span>{{ 'movements.category' | translate }}</span>
+        <div class="categories">
+          @for (category of movements.expenseCategories; track category.id) {
+            <button type="button" class="category" [class.is-active]="categoryId() === category.id"
+              (click)="categoryId.set(category.id)">
+              <fa-icon [name]="category.icon" [size]="18" />
+              <span>{{ category.name }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    }
+
+    <div class="form__row">
+      <label class="field">
+        <span>{{ 'movements.account' | translate }}</span>
+        <select class="input" name="account" [(ngModel)]="accountId">
+          @for (account of accountOptions(); track account.id) {
+            <option [value]="account.id">{{ account.name }}</option>
+          }
+        </select>
+      </label>
+      <label class="field">
+        <span>{{ 'movements.date' | translate }}</span>
+        <input class="input" type="date" name="date" [(ngModel)]="date" />
+      </label>
+    </div>
+
+    @if (showError()) {
+      <p class="form-error" role="alert">{{ 'movements.amountError' | translate }}</p>
+    }
+
+    <button type="submit" class="btn btn--primary btn--block">{{ 'movements.save' | translate }}</button>
+  </form>
+</fa-dialog>

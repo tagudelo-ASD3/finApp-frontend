@@ -1,0 +1,86 @@
+@use 'abstracts/breakpoints' as bp;
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.calendar__weekday {
+  padding-bottom: 4px;
+  color: var(--ink-3);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.calendar__day {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 82px;
+  padding: 8px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  overflow: hidden;
+
+  &.is-outside {
+    opacity: 0.35;
+  }
+
+  &.is-today {
+    outline: 2px solid var(--primary);
+  }
+
+  &.has-payment {
+    background: var(--accent-soft);
+  }
+}
+
+.calendar__number {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.calendar__event {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 11px;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.date-tile {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  line-height: 1.05;
+
+  span {
+    font-size: 11px;
+    text-transform: uppercase;
+  }
+}
+
+@include bp.down(md) {
+  .calendar__day {
+    min-height: 52px;
+    padding: 6px;
+  }
+
+  .calendar__event {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 0;
+  }
+}

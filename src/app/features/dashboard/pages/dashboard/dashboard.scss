@@ -1,0 +1,127 @@
+@use 'abstracts/breakpoints' as bp;
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.balance {
+  display: flex;
+  flex-direction: column;
+  grid-column: span 2;
+  gap: 22px;
+}
+
+.mini-accounts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.mini-account {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--surface-3);
+  text-decoration: none;
+
+  strong {
+    font-size: 17px;
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.stat {
+  flex: 1;
+}
+
+.next-payment {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+
+  // When the column is narrow the button drops below instead of squeezing the amount.
+  .grow {
+    flex-basis: 140px;
+  }
+
+  .btn {
+    flex: 1 0 auto;
+  }
+}
+
+.days {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: var(--accent-soft);
+  line-height: 1;
+
+  strong {
+    font-size: 24px;
+  }
+
+  span {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+.tip {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tip__text {
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.spaced {
+  margin: 12px 0;
+}
+
+@include bp.down(xl) {
+  .dashboard {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .balance,
+  .side-stats {
+    grid-column: span 2;
+  }
+
+  .side-stats {
+    flex-direction: row;
+  }
+}
+
+@include bp.down(md) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .balance,
+  .side-stats {
+    grid-column: auto;
+  }
+
+  .side-stats {
+    flex-direction: column;
+  }
+}

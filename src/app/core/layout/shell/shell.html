@@ -1,0 +1,75 @@
+<div class="layout">
+  <aside class="sidebar">
+    <a class="sidebar__logo" routerLink="/dashboard" [attr.aria-label]="'nav.dashboard' | translate">
+      <fa-logo [size]="42" />
+    </a>
+
+    <nav class="nav" [attr.aria-label]="'nav.main' | translate">
+      @for (item of navItems; track item.path) {
+        <a class="nav__link" [routerLink]="item.path" routerLinkActive="is-active" ariaCurrentWhenActive="page">
+          <fa-icon [name]="item.icon" />
+          <span>{{ item.labelKey | translate }}</span>
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar__bottom">
+      <a class="promo" routerLink="/accounts/auto-register">
+        <div class="row row--between">
+          <span class="icon-tile icon-tile--accent promo__icon"><fa-icon name="zap" [size]="18" /></span>
+          <span class="chip chip--accent">{{ 'nav.new' | translate }}</span>
+        </div>
+        <strong>{{ 'nav.autoRegister' | translate }}</strong>
+        <span class="faint">{{ 'nav.autoRegisterHint' | translate }}</span>
+      </a>
+
+      <a class="pill-row" routerLink="/about">
+        <fa-icon name="info" [size]="18" />
+        {{ 'nav.about' | translate }}
+      </a>
+
+      <label class="pill-row">
+        <fa-icon name="moon" [size]="18" />
+        <span class="pill-row__text">{{ 'nav.darkMode' | translate }}</span>
+        <span class="switch">
+          <input type="checkbox" [checked]="theme.isDark()" (change)="theme.toggle()" />
+          <span></span>
+        </span>
+      </label>
+
+      <a class="me" routerLink="/profile" routerLinkActive="is-active">
+        <span class="avatar"><fa-icon name="user" [size]="18" /></span>
+        <span class="stack">
+          <strong>{{ profile().fullName }}</strong>
+          <span class="faint">{{ 'nav.settings' | translate }}</span>
+        </span>
+      </a>
+    </div>
+  </aside>
+
+  <main class="content">
+    <router-outlet />
+  </main>
+</div>
+
+@switch (ui.openDialog()) {
+  @case ('new-movement') {
+    <fa-new-movement-dialog />
+  }
+  @case ('register-debt') {
+    <fa-register-debt-dialog />
+  }
+  @case ('new-account') {
+    <fa-new-account-dialog />
+  }
+  @case ('edit-limits') {
+    <fa-edit-limits-dialog />
+  }
+  @case ('notifications') {
+    <fa-notifications-dialog />
+  }
+}
+
+@if (ui.toastKey(); as key) {
+  <div class="toast" role="status">{{ key | translate }}</div>
+}

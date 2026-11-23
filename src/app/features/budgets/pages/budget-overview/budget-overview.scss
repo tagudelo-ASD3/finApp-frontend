@@ -1,0 +1,107 @@
+@use 'abstracts/breakpoints' as bp;
+
+.overview {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.ring {
+  flex: none;
+  width: 150px;
+  height: 150px;
+  transform: rotate(-90deg);
+}
+
+.ring__track,
+.ring__value {
+  fill: none;
+  stroke-width: 12;
+}
+
+.ring__track {
+  stroke: var(--surface-3);
+}
+
+.ring__value {
+  stroke: var(--accent);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.4s ease;
+}
+
+.ring__label {
+  position: absolute;
+  left: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+
+  strong {
+    font-size: 28px;
+  }
+}
+
+.overview__chips {
+  margin-top: 8px;
+}
+
+.weeks {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  height: 180px;
+}
+
+.week {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.week__track {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  width: 100%;
+  border-radius: 12px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.week__bar {
+  width: 100%;
+  min-height: 6px;
+  border-radius: 12px;
+  background: var(--surface-3);
+
+  &.is-current {
+    background: var(--accent);
+  }
+}
+
+.categories {
+  gap: 22px 32px;
+}
+
+@include bp.down(lg) {
+  .legend--wide {
+    display: none;
+  }
+}
+
+@include bp.down(sm) {
+  .overview {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ring__label {
+    top: 22px;
+    justify-content: center;
+    height: 150px;
+  }
+}

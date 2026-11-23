@@ -1,0 +1,36 @@
+.empty {
+  padding: 28px;
+  color: var(--ink-2);
+  text-align: center;
+}
+
+.notice {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--ink-2);
+  font-size: 14px;
+}
+
+.notice--good {
+  background: var(--good-soft);
+  color: var(--good);
+  font-weight: 700;
+}
+
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  z-index: 60;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 700;
+  box-shadow: var(--shadow);
+  transform: translateX(-50%);
+}

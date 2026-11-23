@@ -1,0 +1,25 @@
+<fa-dialog [title]="'notifications.title' | translate" [width]="480">
+  <div class="row row--between toolbar">
+    <span class="faint">{{ 'notifications.unread' | translate: { count: notifications.unreadCount() } }}</span>
+    @if (notifications.unreadCount() > 0) {
+      <button type="button" class="link link--sm" (click)="notifications.markAllAsRead()">
+        {{ 'notifications.markAll' | translate }}
+      </button>
+    }
+  </div>
+
+  <ul class="list">
+    @for (item of notifications.notifications(); track item.id) {
+      <li class="list-item notification" [class.is-unread]="!item.read">
+        <span class="icon-tile"><fa-icon [name]="icons[item.kind]" [size]="18" /></span>
+        <span class="list-item__main">
+          <strong>{{ item.title }}</strong>
+          <span class="muted notification__message">{{ item.message }}</span>
+          <span class="faint">{{ item.date | relativeDate: true }}</span>
+        </span>
+      </li>
+    } @empty {
+      <li class="empty">{{ 'notifications.empty' | translate }}</li>
+    }
+  </ul>
+</fa-dialog>

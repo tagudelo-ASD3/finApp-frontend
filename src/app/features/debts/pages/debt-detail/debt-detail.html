@@ -1,0 +1,99 @@
+<div class="page">
+  @if (debt(); as debt) {
+    <fa-page-header [title]="debt.name" [subtitle]="debt.lender" backLink="/debts" backLabel="nav.debts">
+      @if (debt.balance > 0) {
+        <button primary type="button" class="btn btn--primary" (click)="registerPayment()">
+          {{ 'debts.registerPayment' | translate }}
+        </button>
+      }
+    </fa-page-header>
+
+    <div class="grid grid--hero grid--stretch">
+      <section class="card card--hero card--stack">
+        <span class="label">{{ 'debts.currentBalance' | translate }}</span>
+        <p class="amount amount--xl">{{ debt.balance | copCurrency }}</p>
+        <div class="progress progress--on-hero">
+          <div class="progress__bar progress__bar--accent" [style.width.%]="debts.paidPercent(debt)"></div>
+        </div>
+        <p class="faint">
+          {{ 'debts.paidOf' | translate: { percent: debts.paidPercent(debt), amount: (debt.originalAmount | copCurrency) } }}
+        </p>
+      </section>
+
+      <section class="card card--soft card--stack">
+        @if (nextDue(); as due) {
+          <span class="label">{{ 'debts.nextInstallment' | translate }}</span>
+          <p class="amount amount--lg">{{ debt.installment | copCurrency }}</p>
+          <p class="faint">{{ due | date: 'EEEE d \'de\' MMMM' }} · {{ 'debts.inDays' | translate: { days: debts.daysUntilDue(debt) } }}</p>
+        } @else {
+          <span class="label">{{ 'debts.status.paid' | translate }}</span>
+          <p class="muted">{{ 'debts.paidMessage' | translate }}</p>
+        }
+      </section>
+
+      <section class="card">
+        <h2>{{ 'debts.conditions' | translate }}</h2>
+        <dl class="facts">
+          <div>
+            <dt>{{ 'debts.rate' | translate }}</dt>
+            <dd>{{ debt.monthlyRate }} % m.v.</dd>
+          </div>
+          <div>
+            <dt>{{ 'debts.installment' | translate }}</dt>
+            <dd>{{ debt.installment | copCurrency }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'debts.dueDay' | translate }}</dt>
+            <dd>{{ debt.dueDay ?? '—' }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'debts.cutoffDay' | translate }}</dt>
+            <dd>{{ debt.cutoffDay ?? '—' }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'debts.monthlyInterest' | translate }}</dt>
+            <dd class="negative">{{ monthlyInterest() | copCurrency }}</dd>
+          </div>
+        </dl>
+        <a class="link" routerLink="/debts/plan">{{ 'debts.reduceInterest' | translate }} →</a>
+      </section>
+    </div>
+
+    <section class="card">
+      <div class="card__header">
+        <h2>{{ 'debts.schedule' | translate }}</h2>
+        <span class="faint">{{ 'debts.scheduleHint' | translate }}</span>
+      </div>
+      @if (schedule().length) {
+        <div class="table-scroll">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>{{ 'debts.month' | translate }}</th>
+                <th>{{ 'debts.installment' | translate }}</th>
+                <th>{{ 'debts.interest' | translate }}</th>
+                <th>{{ 'debts.principal' | translate }}</th>
+                <th>{{ 'debts.balanceAfter' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of schedule(); track row.date.getTime()) {
+                <tr>
+                  <td class="capitalize">{{ row.date | date: 'MMM y' }}</td>
+                  <td>{{ row.payment | copCurrency }}</td>
+                  <td class="negative">{{ row.interest | copCurrency }}</td>
+                  <td>{{ row.principal | copCurrency }}</td>
+                  <td><strong>{{ row.balance | copCurrency }}</strong></td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      } @else {
+        <p class="empty">{{ 'debts.noSchedule' | translate }}</p>
+      }
+    </section>
+  } @else {
+    <fa-page-header [title]="'debts.notFound' | translate" backLink="/debts" backLabel="nav.debts" />
+  }
+</div>

@@ -1,0 +1,44 @@
+@use 'abstracts/breakpoints' as bp;
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.filters__search {
+  flex: 1;
+  min-width: 200px;
+}
+
+.filters__chips {
+  width: 100%;
+}
+
+.day + .day {
+  margin-top: 18px;
+}
+
+.day__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px 6px;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.amount-col {
+  min-width: 120px;
+  text-align: right;
+}
+
+@include bp.down(md) {
+  .source {
+    display: none;
+  }
+
+  .amount-col {
+    min-width: 0;
+  }
+}

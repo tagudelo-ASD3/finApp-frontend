@@ -1,0 +1,98 @@
+<div class="page">
+  <fa-page-header [title]="'plan.title' | translate" [subtitle]="'plan.subtitle' | translate" backLink="/debts" backLabel="nav.debts">
+    <button primary type="button" class="btn btn--primary" (click)="activate()" [disabled]="!selected().feasible">
+      @if (debts.activePlan() === strategy()) {
+        <fa-icon name="check" [size]="18" />
+        {{ 'plan.active' | translate }}
+      } @else {
+        {{ 'plan.activate' | translate }}
+      }
+    </button>
+  </fa-page-header>
+
+  <div class="grid grid--side-main">
+    <section class="card card--stack">
+      <label class="field">
+        <span>{{ 'plan.budgetLabel' | translate }}</span>
+        <input class="input input--amount" type="number" min="0" step="10000" [value]="debts.planBudget()"
+          (input)="setBudget($any($event.target).valueAsNumber)" />
+      </label>
+      <p class="faint">{{ 'plan.minimumHint' | translate: { amount: (debts.minimumMonthlyPayment() | copCurrency) } }}</p>
+
+      <div class="strategies">
+        @for (option of strategies; track option) {
+          <button type="button" class="strategy" [class.is-active]="strategy() === option" (click)="strategy.set(option)">
+            <span class="row row--between">
+              <strong>{{ 'plan.strategy.' + option + '.name' | translate }}</strong>
+              @if (option === 'avalanche') {
+                <span class="chip chip--accent">{{ 'plan.recommended' | translate }}</span>
+              }
+            </span>
+            <span class="muted">{{ 'plan.strategy.' + option + '.text' | translate }}</span>
+            @if (plans()[option].feasible) {
+              <span class="faint">
+                {{ 'plan.summary' | translate: { months: plans()[option].months, interest: (plans()[option].totalInterest | copCurrency) } }}
+              </span>
+            }
+          </button>
+        }
+      </div>
+    </section>
+
+    <div class="stack stack--lg">
+      @if (selected().feasible) {
+        <div class="grid grid--auto grid--stretch">
+          <section class="card card--hero card--stack">
+            <span class="label">{{ 'plan.debtFree' | translate }}</span>
+            <p class="amount amount--md amount--wrap capitalize">{{ finishDate() | date: 'MMMM y' }}</p>
+            <span class="faint">{{ 'plan.months' | translate: { months: selected().months } }}</span>
+          </section>
+          <section class="card card--stack">
+            <span class="label">{{ 'plan.totalInterest' | translate }}</span>
+            <p class="amount amount--md">{{ selected().totalInterest | copCurrency }}</p>
+          </section>
+          <section class="card card--soft card--stack">
+            <span class="label">{{ 'plan.saved' | translate }}</span>
+            <p class="amount amount--md positive">{{ savedVsMinimum() | copCurrency }}</p>
+            <span class="faint">{{ 'plan.monthsSaved' | translate: { months: monthsSaved() } }}</span>
+          </section>
+        </div>
+
+        <section class="card">
+          <div class="card__header">
+            <h2>{{ 'plan.chartTitle' | translate }}</h2>
+            <div class="legend">
+              <span><i class="dot dot--accent"></i>{{ 'plan.withPlan' | translate }}</span>
+              <span><i class="dot"></i>{{ 'plan.onlyMinimum' | translate }}</span>
+            </div>
+          </div>
+          <svg class="chart" [attr.viewBox]="'0 -8 ' + chartWidth + ' ' + (chartHeight + 16)" preserveAspectRatio="none" aria-hidden="true">
+            <path class="chart__line chart__line--muted" [attr.d]="minimumPath()" />
+            <path class="chart__line" [attr.d]="chartPath()" />
+          </svg>
+        </section>
+
+        <section class="card">
+          <h2>{{ 'plan.order' | translate }}</h2>
+          <ol class="steps steps--compact">
+            @for (debt of selected().order; track debt.id; let i = $index) {
+              <li>
+                <span class="steps__number">{{ i + 1 }}</span>
+                <div class="stack grow">
+                  <strong>{{ debt.name }}</strong>
+                  <span class="faint">{{ debt.lender }} · {{ debt.monthlyRate }} % m.v.</span>
+                </div>
+                <strong class="amount">{{ debt.balance | copCurrency }}</strong>
+              </li>
+            }
+          </ol>
+        </section>
+      } @else {
+        <section class="notice">
+          <fa-icon name="info" />
+          {{ 'plan.notFeasible' | translate: { amount: (debts.minimumMonthlyPayment() | copCurrency) } }}
+        </section>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+.intro h2 {
+  font-size: 24px;
+}
+
+.example {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 20px;
+  background: var(--surface-3);
+
+  > span {
+    align-self: flex-start;
+  }
+}
+
+.bubble {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: var(--surface);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.bubble--result {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.privacy {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  opacity: 0.85;
+}

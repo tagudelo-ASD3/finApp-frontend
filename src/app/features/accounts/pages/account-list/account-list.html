@@ -1,0 +1,57 @@
+<div class="page">
+  <fa-page-header [title]="'nav.accounts' | translate" [subtitle]="'accounts.subtitle' | translate">
+    <button primary type="button" class="btn btn--primary" (click)="ui.open('new-account')">
+      <fa-icon name="plus" [size]="18" />
+      {{ 'accounts.new' | translate }}
+    </button>
+  </fa-page-header>
+
+  <div class="grid grid--main-side grid--stretch">
+    <section class="card card--hero card--stack">
+      <span class="label">{{ 'accounts.totalAvailable' | translate }}</span>
+      <p class="amount amount--xl">{{ accounts.totalAvailable() | copCurrency }}</p>
+      <p class="faint">{{ 'accounts.creditNote' | translate: { amount: (creditDebt() | copCurrency) } }}</p>
+    </section>
+
+    <a class="card card--soft card--stack card--link auto" routerLink="/accounts/auto-register">
+      <span class="icon-tile"><fa-icon name="zap" /></span>
+      <strong>{{ 'accounts.autoTitle' | translate }}</strong>
+      <span class="muted">{{ 'accounts.autoText' | translate: { count: autoCount() } }}</span>
+      <span class="link">{{ 'accounts.autoLink' | translate }} →</span>
+    </a>
+  </div>
+
+  <div class="grid grid--cards grid--stretch">
+    @for (account of accounts.accounts(); track account.id) {
+      <section class="card card--stack account" [class.card--dashed]="account.sync === 'inactive'">
+        <div class="row row--between">
+          <span class="initials">{{ account.initials }}</span>
+          <span
+            class="chip"
+            [class.chip--good]="account.sync === 'auto'"
+            [class.chip--warn]="account.sync === 'manual'"
+          >
+            {{ 'accounts.sync.' + account.sync | translate }}
+          </span>
+        </div>
+        <div class="stack">
+          <strong>{{ account.name }}</strong>
+          <span class="faint">{{ account.description }}</span>
+        </div>
+        @if (account.sync === 'inactive') {
+          <button type="button" class="btn btn--sm" (click)="activate(account.id)">{{ 'accounts.activate' | translate }}</button>
+        } @else {
+          <div class="row row--between">
+            <span class="amount amount--md" [class.negative]="(account.balance ?? 0) < 0">{{ account.balance | copCurrency }}</span>
+            <span class="faint">{{ 'accounts.movementsMonth' | translate: { count: movementsCount(account.id) } }}</span>
+          </div>
+        }
+      </section>
+    }
+
+    <button type="button" class="card card--dashed card--link add" (click)="ui.open('new-account')">
+      <fa-icon name="plus" [size]="26" />
+      <span>{{ 'accounts.addAnother' | translate }}</span>
+    </button>
+  </div>
+</div>

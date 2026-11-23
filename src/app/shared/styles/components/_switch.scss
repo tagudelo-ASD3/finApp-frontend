@@ -1,0 +1,73 @@
+// On/off toggle: <label class="switch"><input type="checkbox" /><span></span></label>
+.switch {
+  position: relative;
+  display: inline-block;
+  flex: none;
+  width: 44px;
+  height: 26px;
+
+  input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  span {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: var(--surface-3);
+    pointer-events: none;
+    transition: background-color 0.2s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
+      transition: transform 0.2s ease;
+    }
+  }
+
+  input:checked + span {
+    background: var(--accent);
+
+    &::after {
+      transform: translateX(18px);
+    }
+  }
+
+  input:focus-visible + span {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+// Rounded row with an icon, a text and something on the right (switch, arrow…).
+.pill-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: var(--surface);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pill-row--soft {
+  background: var(--surface-2);
+}
+
+.pill-row__text {
+  flex: 1;
+  min-width: 0;
+}

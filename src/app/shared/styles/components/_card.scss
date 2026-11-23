@@ -1,0 +1,48 @@
+.card {
+  min-width: 0;
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  // Long words (names, emails) break instead of spilling out of the card.
+  overflow-wrap: break-word;
+}
+
+// Cards whose content is a vertical list of label, amount and note.
+.card--stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card--hero,
+.card--soft {
+  background: var(--surface-2);
+  box-shadow: none;
+}
+
+// Hero cards size their big amount to the card width (see .amount--xl).
+.card--hero {
+  container-type: inline-size;
+}
+
+.card--dashed {
+  border: 2px dashed var(--surface-3);
+  background: transparent;
+  box-shadow: none;
+}
+
+// Clickable card (anchor or button) that looks like a regular card.
+.card--link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}

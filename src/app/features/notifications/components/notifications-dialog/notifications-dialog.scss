@@ -1,0 +1,20 @@
+.toolbar {
+  margin-bottom: 4px;
+}
+
+.notification {
+  align-items: flex-start;
+
+  .list-item__main strong {
+    white-space: normal;
+  }
+
+  &.is-unread .icon-tile {
+    background: var(--accent-soft);
+  }
+}
+
+.notification__message {
+  margin: 2px 0 4px;
+  font-size: 14px;
+}

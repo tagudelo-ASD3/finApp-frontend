@@ -1,0 +1,63 @@
+// Design tokens for FinApp: espresso, caramel and cream palette with Plus Jakarta Sans.
+
+:root {
+  --font: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --bg: #f4ede3;
+  --surface: #fffcf8;
+  --surface-2: #eadfcf;
+  --surface-3: #ddcdb8;
+  --ink: #2b1f17;
+  --ink-2: #6b5a4c;
+  --ink-3: #9a8878;
+  --line: #e7dccd;
+  --accent: #d9a66b;
+  --accent-soft: #f1dcc0;
+  --on-accent: #2b1f17;
+  --primary: #2b1f17;
+  --on-primary: #f4ede3;
+  --good: #4f7a4a;
+  --good-soft: #dfe9d6;
+  --warn: #b36b1f;
+  --warn-soft: #f5e0c4;
+  --bad: #b4483a;
+  --bad-soft: #f3d6cf;
+  --logo-body: #2b1f17;
+  --logo-ink: #f4ede3;
+  --overlay: rgb(43 31 23 / 45%);
+  --shadow: 0 1px 2px rgb(43 31 23 / 6%), 0 8px 24px rgb(43 31 23 / 6%);
+
+  --radius-sm: 10px;
+  --radius: 18px;
+  --radius-lg: 26px;
+  --sidebar-width: 248px;
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #17110d;
+  --surface: #221913;
+  --surface-2: #2c2119;
+  --surface-3: #3a2c21;
+  --ink: #f4ede3;
+  --ink-2: #cdbba8;
+  --ink-3: #9c8a78;
+  --line: #3a2c21;
+  --accent: #d9a66b;
+  --accent-soft: #4a3521;
+  --primary: #d9a66b;
+  --on-primary: #2b1f17;
+  --good: #9cc58f;
+  --good-soft: #2c3a26;
+  --warn: #e3a560;
+  --warn-soft: #45311b;
+  --bad: #e58c7e;
+  --bad-soft: #4a241e;
+  --logo-body: #f4ede3;
+  --logo-ink: #2b1f17;
+  --overlay: rgb(0 0 0 / 60%);
+  --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 8px 24px rgb(0 0 0 / 25%);
+
+  color-scheme: dark;
+}

@@ -1,0 +1,99 @@
+<div class="page">
+  <fa-page-header [title]="'nav.movements' | translate" [subtitle]="'movements.subtitle' | translate">
+    <button primary type="button" class="btn btn--primary" (click)="ui.open('new-movement')">
+      <fa-icon name="plus" [size]="18" />
+      {{ 'movements.new' | translate }}
+    </button>
+  </fa-page-header>
+
+  <div class="grid grid--3 grid--stretch">
+    <section class="card">
+      <span class="label">{{ 'movements.income' | translate }}</span>
+      <p class="amount amount--lg positive">{{ filteredIncome() | copCurrency: 'signed' }}</p>
+    </section>
+    <section class="card">
+      <span class="label">{{ 'movements.expenses' | translate }}</span>
+      <p class="amount amount--lg">{{ -filteredExpense() | copCurrency: 'signed' }}</p>
+    </section>
+    <section class="card">
+      <span class="label">{{ 'movements.count' | translate }}</span>
+      <p class="amount amount--lg">{{ filtered().length }}</p>
+    </section>
+  </div>
+
+  <section class="card filters">
+    <div class="segmented" role="group">
+      @for (option of ['all', 'expense', 'income']; track option) {
+        <button type="button" [class.is-active]="type() === option" (click)="type.set($any(option))">
+          {{ 'movements.type.' + option | translate }}
+        </button>
+      }
+    </div>
+
+    <label class="search-box filters__search">
+      <fa-icon name="search" [size]="18" />
+      <input
+        type="search"
+        [placeholder]="'movements.searchPlaceholder' | translate"
+        [value]="query()"
+        (input)="query.set($any($event.target).value)"
+      />
+    </label>
+
+    <select class="input input--auto" [value]="accountId()" (change)="accountId.set($any($event.target).value)"
+      [attr.aria-label]="'movements.account' | translate">
+      <option value="all">{{ 'movements.allAccounts' | translate }}</option>
+      @for (account of accounts.accounts(); track account.id) {
+        <option [value]="account.id">{{ account.name }}</option>
+      }
+    </select>
+
+    <div class="chip-group filters__chips">
+      <button type="button" class="chip" [class.is-active]="categoryId() === 'all'" (click)="categoryId.set('all')">
+        {{ 'movements.allCategories' | translate }}
+      </button>
+      @for (category of movements.categories; track category.id) {
+        <button type="button" class="chip" [class.is-active]="categoryId() === category.id" (click)="categoryId.set(category.id)">
+          {{ category.name }}
+        </button>
+      }
+    </div>
+  </section>
+
+  <section class="card">
+    @for (group of groups(); track group.date) {
+      <div class="day">
+        <div class="day__header">
+          <strong>{{ group.date | relativeDate }} <span class="faint">· {{ group.date | date: 'EEEE d' }}</span></strong>
+          <span class="faint">{{ group.total | copCurrency: 'signed' }}</span>
+        </div>
+        <ul class="list">
+          @for (movement of group.items; track movement.id) {
+            <li>
+              <a class="list-item list-item--link" [routerLink]="['/movements', movement.id]">
+                <span class="icon-tile"><fa-icon [name]="movements.category(movement.categoryId).icon" /></span>
+                <span class="list-item__main">
+                  <strong>{{ movement.description }}</strong>
+                  <span class="faint">
+                    {{ movements.category(movement.categoryId).name }} · {{ accounts.byId(movement.accountId)?.name }}
+                  </span>
+                </span>
+                <span class="chip source" [class.chip--accent]="movement.source === 'auto'">
+                  {{ 'movements.source.' + movement.source | translate }}
+                </span>
+                <strong class="amount amount-col" [class.positive]="movement.type === 'income'">
+                  {{ signedAmount(movement) | copCurrency: 'signed' }}
+                </strong>
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    } @empty {
+      <div class="empty">
+        <p>{{ 'movements.empty' | translate }}</p>
+        <button type="button" class="btn" (click)="clearFilters()">{{ 'movements.clearFilters' | translate }}</button>
+      </div>
+    }
+  </section>
+</div>

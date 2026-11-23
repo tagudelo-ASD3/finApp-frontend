@@ -1,0 +1,64 @@
+<div class="page">
+  @if (movement(); as movement) {
+    <fa-page-header
+      [title]="movement.description"
+      [subtitle]="movement.date | date: 'EEEE d \'de\' MMMM, h:mm a'"
+      backLink="/movements"
+      backLabel="nav.movements"
+    />
+
+    <div class="grid grid--side-main">
+      <section class="card card--hero hero">
+        <span class="icon-tile icon-tile--lg icon-tile--surface"><fa-icon [name]="movements.category(movement.categoryId).icon" [size]="28" /></span>
+        <p class="amount amount--xl">{{ signedAmount(movement) | copCurrency: 'signed' }}</p>
+        <span class="chip chip--strong">
+          {{ 'movements.type.' + movement.type | translate }} · {{ 'movements.source.' + movement.source | translate }}
+        </span>
+      </section>
+
+      <section class="card">
+        <h2>{{ 'movements.details' | translate }}</h2>
+        <dl class="facts">
+          <div>
+            <dt>{{ 'movements.account' | translate }}</dt>
+            <dd><a class="link" routerLink="/accounts">{{ account()?.name }}</a></dd>
+          </div>
+          <div>
+            <dt>{{ 'movements.date' | translate }}</dt>
+            <dd>{{ movement.date | date: 'd MMM y, h:mm a' }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'movements.origin' | translate }}</dt>
+            <dd>{{ 'movements.originText.' + movement.source | translate: { account: account()?.name } }}</dd>
+          </div>
+          <div>
+            <dt>{{ 'movements.category' | translate }}</dt>
+            <dd>
+              <select class="input input--auto" [value]="movement.categoryId" (change)="changeCategory($any($event.target).value)">
+                @for (category of categoryOptions(); track category.id) {
+                  <option [value]="category.id">{{ category.name }}</option>
+                }
+              </select>
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      @if (movement.source === 'auto') {
+        <section class="notice">
+          <fa-icon name="zap" />
+          <p>{{ 'movements.autoNotice' | translate }}</p>
+        </section>
+      }
+
+      <div class="actions">
+        <button type="button" class="btn" (click)="remove()">
+          <fa-icon name="trash" [size]="18" />
+          {{ 'movements.delete' | translate }}
+        </button>
+      </div>
+    </div>
+  } @else {
+    <fa-page-header [title]="'movements.notFound' | translate" backLink="/movements" backLabel="nav.movements" />
+  }
+</div>

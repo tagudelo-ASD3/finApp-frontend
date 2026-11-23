@@ -1,0 +1,76 @@
+@use 'abstracts/breakpoints' as bp;
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.header__titles {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  p {
+    font-size: 14px;
+  }
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+// The global search box on the page background needs the card surface.
+.search {
+  width: 240px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.bell {
+  position: relative;
+  border: 0;
+  box-shadow: var(--shadow);
+}
+
+.bell__badge {
+  position: absolute;
+  top: 4px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 18px;
+}
+
+@include bp.down(md) {
+  .header__actions {
+    width: 100%;
+  }
+
+  .search {
+    order: 3;
+    width: 100%;
+  }
+}

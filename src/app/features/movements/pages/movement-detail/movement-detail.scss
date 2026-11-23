@@ -1,0 +1,25 @@
+@use 'abstracts/breakpoints' as bp;
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  grid-row: span 2;
+}
+
+.actions {
+  display: flex;
+  grid-column: 2;
+  justify-content: flex-end;
+}
+
+@include bp.down(lg) {
+  .hero {
+    grid-row: auto;
+  }
+
+  .actions {
+    grid-column: auto;
+  }
+}

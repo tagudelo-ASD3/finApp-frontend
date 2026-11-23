@@ -1,0 +1,60 @@
+// Small bar chart used inside stat cards.
+.bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 46px;
+
+  span {
+    flex: 1;
+    max-width: 12px;
+    border-radius: 6px;
+    background: var(--surface-3);
+  }
+
+  span.is-strong {
+    background: var(--accent);
+  }
+}
+
+// Colored dots of a chart legend.
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  color: var(--ink-3);
+  font-size: 13px;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--surface-3);
+}
+
+.dot--good {
+  background: var(--good);
+}
+
+.dot--warn {
+  background: var(--warn);
+}
+
+.dot--bad {
+  background: var(--bad);
+}
+
+.dot--accent {
+  background: var(--accent);
+}
+
+.dot--primary {
+  background: var(--primary);
+}

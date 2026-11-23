@@ -1,0 +1,69 @@
+<div class="page">
+  <fa-page-header [title]="'nav.calendar' | translate" [subtitle]="'calendar.subtitle' | translate">
+    <button primary type="button" class="btn btn--primary" (click)="ui.open('register-debt')">
+      <fa-icon name="plus" [size]="18" />
+      {{ 'debts.register' | translate }}
+    </button>
+  </fa-page-header>
+
+  <div class="grid grid--main-side">
+    <section class="card">
+      <div class="card__header">
+        <button type="button" class="btn btn--icon" [attr.aria-label]="'calendar.previous' | translate" (click)="changeMonth(-1)">
+          <fa-icon name="chevron-left" />
+        </button>
+        <h2 class="capitalize">{{ month() | date: 'MMMM y' }}</h2>
+        <button type="button" class="btn btn--icon" [attr.aria-label]="'calendar.next' | translate" (click)="changeMonth(1)">
+          <fa-icon name="chevron-right" />
+        </button>
+      </div>
+
+      <div class="calendar" role="grid">
+        @for (day of weekDays; track $index) {
+          <span class="calendar__weekday">{{ day }}</span>
+        }
+        @for (day of days(); track day.date.getTime()) {
+          <div class="calendar__day" [class.is-outside]="!day.inMonth" [class.is-today]="day.isToday"
+            [class.has-payment]="day.payments.length > 0">
+            <span class="calendar__number">{{ day.date.getDate() }}</span>
+            @for (payment of day.payments; track payment.id) {
+              <span class="calendar__event">{{ payment.name }}</span>
+            }
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card__header">
+        <h2>{{ 'calendar.thisMonth' | translate }}</h2>
+        <strong class="amount">{{ monthTotal() | copCurrency }}</strong>
+      </div>
+      <ul class="list">
+        @for (payment of payments(); track payment.id) {
+          <li class="list-item">
+            <span class="date-tile">
+              <strong>{{ payment.date.getDate() }}</strong>
+              <span>{{ payment.date | date: 'MMM' }}</span>
+            </span>
+            <span class="list-item__main">
+              <strong>{{ payment.name }}</strong>
+              <span class="faint">
+                @if (payment.daysLeft < 0) {
+                  {{ 'calendar.paid' | translate }}
+                } @else if (payment.daysLeft === 0) {
+                  {{ 'calendar.today' | translate }}
+                } @else {
+                  {{ 'debts.inDays' | translate: { days: payment.daysLeft } }}
+                }
+              </span>
+            </span>
+            <strong class="amount">{{ payment.amount | copCurrency }}</strong>
+          </li>
+        } @empty {
+          <li class="empty">{{ 'calendar.empty' | translate }}</li>
+        }
+      </ul>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,108 @@
+<div class="page">
+  <fa-page-header
+    [title]="'nav.budgets' | translate"
+    [subtitle]="('budgets.subtitle' | translate) + ' ' + (today | date: 'MMMM y')"
+  >
+    <button primary type="button" class="btn btn--primary" (click)="ui.open('edit-limits')">
+      {{ 'budgets.editLimits' | translate }}
+    </button>
+  </fa-page-header>
+
+  <div class="grid grid--main-side grid--stretch">
+    <section class="card card--hero overview">
+      <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+        <circle cx="60" cy="60" r="52" class="ring__track" />
+        <circle cx="60" cy="60" r="52" class="ring__value"
+          [attr.stroke-dasharray]="ringLength" [attr.stroke-dashoffset]="ringOffset()" />
+      </svg>
+      <div class="ring__label">
+        <strong>{{ budgets.percentUsed() }} %</strong>
+        <span class="faint">{{ 'budgets.used' | translate }}</span>
+      </div>
+      <div class="stack overview__text">
+        <span class="label">{{ 'budgets.spentOfLimit' | translate }}</span>
+        <p class="amount amount--lg">{{ budgets.totalSpent() | copCurrency }}</p>
+        <p class="faint">{{ 'common.of' | translate }} {{ budgets.totalLimit() | copCurrency }}</p>
+        <div class="chip-group overview__chips">
+          <span class="chip chip--strong">{{ 'budgets.available' | translate }} {{ budgets.available() | copCurrency }}</span>
+          <span class="chip chip--strong">{{ 'budgets.daysLeft' | translate: { days: budgets.daysLeft() } }}</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card__header">
+        <h2>{{ 'budgets.weekly' | translate }}</h2>
+      </div>
+      <div class="weeks">
+        @for (week of budgets.weekly(); track week.label; let i = $index) {
+          <div class="week">
+            <span class="faint">{{ week.amount | copCurrency: 'thousands' }}</span>
+            <div class="week__track">
+              <div class="week__bar" [class.is-current]="i === currentWeek()" [style.height.%]="(week.amount / weeklyMax()) * 100"></div>
+            </div>
+            <span class="faint">{{ 'budgets.week' | translate }} {{ week.label }}</span>
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+
+  <div class="grid grid--3 grid--stretch">
+    <section class="card card--soft card--stack">
+      <span class="label">{{ 'budgets.dailyAverage' | translate }}</span>
+      <p class="amount amount--md">{{ budgets.dailyAverage() | copCurrency }}</p>
+      <p class="faint">
+        {{ (budgets.paceDifference() > 0 ? 'budgets.paceAbove' : 'budgets.paceBelow') | translate: { percent: (budgets.paceDifference() < 0 ? -budgets.paceDifference() : budgets.paceDifference()), ideal: (budgets.dailyIdeal() | copCurrency) } }}
+      </p>
+    </section>
+    @if (budgets.topCategory(); as top) {
+      <section class="card card--soft card--stack">
+        <span class="label">{{ 'budgets.topCategory' | translate }}</span>
+        <p class="amount amount--md">{{ top.category.name }}</p>
+        <p class="faint">{{ top.spent | copCurrency }} · {{ top.percent }} % {{ 'budgets.ofLimit' | translate }}</p>
+      </section>
+    }
+    <section class="card card--soft card--stack">
+      <span class="label">{{ 'budgets.exceeded' | translate }}</span>
+      <p class="amount amount--md">{{ budgets.exceededCount() }}</p>
+      <p class="faint">
+        @if (budgets.mostExceeded(); as worst) {
+          {{ worst.category.name }} {{ 'budgets.exceededBy' | translate: { amount: (worst.spent - worst.limit | copCurrency) } }}
+        } @else {
+          {{ 'budgets.noneExceeded' | translate }}
+        }
+      </p>
+    </section>
+  </div>
+
+  <section class="card">
+    <div class="card__header">
+      <h2>{{ 'budgets.byCategory' | translate }}</h2>
+      <div class="legend legend--wide">
+        <span><i class="dot dot--good"></i>{{ 'budgets.status.good' | translate }}</span>
+        <span><i class="dot dot--warn"></i>{{ 'budgets.status.near' | translate }}</span>
+        <span><i class="dot dot--bad"></i>{{ 'budgets.status.over' | translate }}</span>
+      </div>
+    </div>
+    <div class="grid grid--2 categories">
+      @for (item of budgets.items(); track item.category.id) {
+        <div class="stack stack--md">
+          <div class="row">
+            <span class="icon-tile"><fa-icon [name]="item.category.icon" /></span>
+            <div class="stack grow">
+              <strong>{{ item.category.name }}</strong>
+              <span class="faint">{{ item.spent | copCurrency }} {{ 'common.of' | translate }} {{ item.limit | copCurrency }}</span>
+            </div>
+            <span class="chip" [class.chip--good]="item.status === 'good'" [class.chip--warn]="item.status === 'near'"
+              [class.chip--bad]="item.status === 'over'">{{ item.percent }} %</span>
+          </div>
+          <div class="progress">
+            <div class="progress__bar" [class.progress__bar--warn]="item.status === 'near'"
+              [class.progress__bar--bad]="item.status === 'over'" [style.width.%]="item.percent > 100 ? 100 : item.percent"></div>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+</div>

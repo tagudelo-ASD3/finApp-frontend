@@ -1,0 +1,67 @@
+<div class="page">
+  <fa-page-header [title]="'nav.debts' | translate" [subtitle]="'debts.subtitle' | translate">
+    <a secondary class="btn" routerLink="/debts/plan">{{ 'debts.seePlan' | translate }}</a>
+    <button primary type="button" class="btn btn--primary" (click)="ui.open('register-debt')">
+      <fa-icon name="plus" [size]="18" />
+      {{ 'debts.register' | translate }}
+    </button>
+  </fa-page-header>
+
+  <div class="grid grid--hero grid--stretch">
+    <section class="card card--hero card--stack">
+      <span class="label">{{ 'debts.total' | translate }}</span>
+      <p class="amount amount--xl">{{ debts.totalDebt() | copCurrency }}</p>
+      <div class="progress progress--on-hero">
+        <div class="progress__bar progress__bar--accent" [style.width.%]="debts.totalPaidPercent()"></div>
+      </div>
+      <p class="faint">{{ 'debts.paidPercent' | translate: { percent: debts.totalPaidPercent() } }}</p>
+    </section>
+    <section class="card card--stack">
+      <span class="label">{{ 'debts.minimumMonthly' | translate }}</span>
+      <p class="amount amount--lg">{{ debts.minimumMonthlyPayment() | copCurrency }}</p>
+      <p class="faint">{{ 'debts.activeCount' | translate: { count: debts.activeDebts().length } }}</p>
+    </section>
+    <section class="card card--stack">
+      <span class="label">{{ 'debts.interestYear' | translate }}</span>
+      <p class="amount amount--lg">{{ debts.interestPaidThisYear | copCurrency }}</p>
+      <a class="link" routerLink="/debts/plan">{{ 'debts.reduceInterest' | translate }} →</a>
+    </section>
+  </div>
+
+  <section class="card">
+    <div class="card__header">
+      <h2>{{ 'debts.myDebts' | translate }}</h2>
+      <a class="link" routerLink="/calendar">{{ 'nav.calendar' | translate }}</a>
+    </div>
+    <ul class="list">
+      @for (debt of debts.debts(); track debt.id) {
+        <li>
+          <a class="list-item list-item--link" [routerLink]="['/debts', debt.id]">
+            <span class="initials">{{ debt.initials }}</span>
+            <span class="list-item__main">
+              <strong>{{ debt.name }}</strong>
+              <span class="faint">{{ debt.lender }}@if (debt.monthlyRate > 0) { · {{ debt.monthlyRate }} % m.v.}</span>
+              <div class="progress debt__progress">
+                <div class="progress__bar progress__bar--accent" [style.width.%]="debts.paidPercent(debt)"></div>
+              </div>
+            </span>
+            <span class="stack stack--end debt__status">
+              <strong class="amount amount--md">{{ debt.balance | copCurrency }}</strong>
+              @switch (debts.status(debt)) {
+                @case ('paid') {
+                  <span class="chip chip--good">{{ 'debts.status.paid' | translate }}</span>
+                }
+                @case ('due-soon') {
+                  <span class="chip chip--warn">{{ 'debts.status.dueSoon' | translate: { days: debts.daysUntilDue(debt) } }}</span>
+                }
+                @default {
+                  <span class="chip">{{ 'debts.installmentOf' | translate: { amount: (debt.installment | copCurrency) } }}</span>
+                }
+              }
+            </span>
+          </a>
+        </li>
+      }
+    </ul>
+  </section>
+</div>

@@ -1,0 +1,55 @@
+.muted {
+  color: var(--ink-2);
+}
+
+.faint {
+  color: var(--ink-3);
+  font-size: 13px;
+}
+
+.label {
+  color: var(--ink-2);
+  font-size: 14px;
+}
+
+.amount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.amount--xl {
+  // 15cqi = 15 % of the hero card width, so long amounts always fit their card.
+  font-size: clamp(28px, 15cqi, 54px);
+  line-height: 1;
+}
+
+.amount--lg {
+  font-size: 30px;
+}
+
+.amount--md {
+  font-size: 20px;
+}
+
+// Big value that may wrap, such as a month name.
+.amount--wrap {
+  white-space: normal;
+}
+
+.positive {
+  color: var(--good);
+}
+
+.negative {
+  color: var(--bad);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.capitalize::first-letter {
+  text-transform: uppercase;
+}

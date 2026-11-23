@@ -1,0 +1,117 @@
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}
+
+// Whole row is a link to a detail page.
+.list-item--link {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover strong {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+li:last-child > .list-item {
+  border-bottom: 0;
+}
+
+.list-item__main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+
+  // Names wrap to a second line instead of being cut.
+  strong {
+    overflow-wrap: anywhere;
+  }
+}
+
+// Label / value pairs of a detail page.
+.facts {
+  display: flex;
+  flex-direction: column;
+  margin: 12px 0 0;
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  > div:last-child {
+    border-bottom: 0;
+  }
+
+  dt {
+    color: var(--ink-2);
+    font-size: 14px;
+  }
+
+  dd {
+    margin: 0;
+    font-weight: 700;
+    text-align: right;
+  }
+}
+
+// Numbered steps of a guide.
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 8px 0 18px;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    display: flex;
+    gap: 14px;
+  }
+}
+
+.steps__number {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  font-weight: 800;
+}
+
+// Steps where each row is a single line (ranking, order of payment).
+.steps--compact {
+  margin-bottom: 0;
+
+  > li {
+    align-items: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  > li:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+}

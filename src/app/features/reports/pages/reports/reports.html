@@ -1,0 +1,103 @@
+<div class="page">
+  <fa-page-header
+    [title]="'nav.reports' | translate"
+    [subtitle]="('reports.subtitle' | translate) + ' ' + (today | date: 'MMMM y')"
+  >
+    <button primary type="button" class="btn" (click)="download()">
+      <fa-icon name="download" [size]="18" />
+      {{ 'reports.download' | translate }}
+    </button>
+  </fa-page-header>
+
+  <div class="grid grid--3 grid--stretch">
+    <section class="card card--hero card--stack">
+      <span class="label">{{ 'reports.savings' | translate }}</span>
+      <p class="amount amount--lg">{{ reports.monthSavings() | copCurrency }}</p>
+      <span class="faint">{{ 'reports.savingsRate' | translate: { percent: reports.savingsRate() } }}</span>
+    </section>
+    <section class="card card--stack">
+      <span class="label">{{ 'reports.averageExpense' | translate }}</span>
+      <p class="amount amount--lg">{{ reports.averageExpense() | copCurrency }}</p>
+      <span class="faint">{{ 'reports.lastSixMonths' | translate }}</span>
+    </section>
+    @if (reports.highestExpenseMonth(); as highest) {
+      <section class="card card--soft card--stack">
+        <span class="label">{{ 'reports.highestMonth' | translate }}</span>
+        <p class="amount amount--lg">{{ highest.label }}</p>
+        <span class="faint">{{ highest.expense | copCurrency }}</span>
+      </section>
+    }
+  </div>
+
+  <section class="card">
+    <div class="card__header">
+      <h2>{{ 'reports.incomeVsExpense' | translate }}</h2>
+      <div class="legend">
+        <span><i class="dot dot--primary"></i>{{ 'movements.income' | translate }}</span>
+        <span><i class="dot dot--accent"></i>{{ 'movements.expenses' | translate }}</span>
+      </div>
+    </div>
+    <div class="history">
+      @for (month of reports.history(); track month.label; let last = $last) {
+        <div class="history__month" [class.is-current]="last">
+          <div class="history__bars">
+            <span class="history__bar history__bar--income" [style.height.%]="barHeight(month.income)"
+              [attr.title]="month.income | copCurrency"></span>
+            <span class="history__bar history__bar--expense" [style.height.%]="barHeight(month.expense)"
+              [attr.title]="month.expense | copCurrency"></span>
+          </div>
+          <span class="faint">{{ month.label }}</span>
+        </div>
+      }
+    </div>
+  </section>
+
+  <div class="grid grid--2 grid--stretch">
+    <section class="card">
+      <div class="card__header">
+        <h2>{{ 'reports.byCategory' | translate }}</h2>
+        <strong class="amount">{{ reports.totalExpense() | copCurrency }}</strong>
+      </div>
+      <div class="donut-layout">
+        <svg class="donut" viewBox="0 0 120 120" aria-hidden="true">
+          @for (slice of slices(); track slice.id) {
+            <circle cx="60" cy="60" [attr.r]="radius" [attr.stroke]="slice.color"
+              [attr.stroke-dasharray]="slice.dasharray" [attr.stroke-dashoffset]="slice.dashoffset" />
+          }
+        </svg>
+        <ul class="list grow">
+          @for (slice of slices(); track slice.id) {
+            <li class="list-item">
+              <i class="dot" [style.background]="slice.color"></i>
+              <span class="list-item__main"><strong>{{ slice.label }}</strong></span>
+              <span class="faint">{{ slice.percent }} %</span>
+              <strong class="amount">{{ slice.amount | copCurrency }}</strong>
+            </li>
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card__header">
+        <h2>{{ 'reports.byAccount' | translate }}</h2>
+      </div>
+      <ul class="list">
+        @for (share of reports.byAccount(); track share.id) {
+          <li class="list-item">
+            <span class="initials initials--sm">{{ share.initials }}</span>
+            <span class="list-item__main stack--md">
+              <span class="row row--between">
+                <strong>{{ share.label }}</strong>
+                <strong class="amount">{{ share.amount | copCurrency }}</strong>
+              </span>
+              <span class="progress">
+                <span class="progress__bar progress__bar--accent" [style.width.%]="share.percent"></span>
+              </span>
+            </span>
+          </li>
+        }
+      </ul>
+    </section>
+  </div>
+</div>

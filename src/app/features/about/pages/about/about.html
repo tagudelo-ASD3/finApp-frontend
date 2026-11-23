@@ -1,0 +1,75 @@
+<div class="about">
+  <header class="row row--between topbar">
+    <a routerLink="/" class="topbar__logo"><fa-logo [size]="38" /></a>
+    <a class="btn btn--primary" [routerLink]="isLoggedIn() ? '/dashboard' : '/login'">
+      {{ (isLoggedIn() ? 'about.backToApp' : 'about.tryDemo') | translate }}
+      <fa-icon name="arrow-right" [size]="18" />
+    </a>
+  </header>
+
+  <section class="card card--hero intro">
+    <span class="chip chip--accent">{{ 'about.badge' | translate }}</span>
+    <h1>{{ 'about.title' | translate }}</h1>
+    <p class="intro__text">{{ 'about.text' | translate }}</p>
+  </section>
+
+  <section class="card">
+    <div class="card__header">
+      <h2>{{ 'about.videoTitle' | translate }}</h2>
+      <fa-icon name="video" />
+    </div>
+    @if (videoUrl) {
+      <div class="video">
+        <iframe [src]="videoUrl" [title]="'about.videoTitle' | translate" allowfullscreen
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      </div>
+    } @else {
+      <div class="video video--placeholder">
+        <fa-icon name="video" [size]="40" />
+        <p class="muted">{{ 'about.videoPending' | translate }}</p>
+      </div>
+    }
+  </section>
+
+  <div class="grid grid--side-main">
+    <section class="card">
+      <h2>{{ 'about.processTitle' | translate }}</h2>
+      <ol class="steps">
+        @for (step of steps; track step; let i = $index) {
+          <li>
+            <span class="steps__number">{{ i + 1 }}</span>
+            <div class="stack">
+              <strong>{{ 'about.steps.' + step + '.title' | translate }}</strong>
+              <span class="muted">{{ 'about.steps.' + step + '.text' | translate }}</span>
+            </div>
+          </li>
+        }
+      </ol>
+    </section>
+
+    <div class="stack stack--lg">
+      <section class="card">
+        <h2>{{ 'about.toolsTitle' | translate }}</h2>
+        <ul class="list">
+          @for (tool of tools; track tool.name) {
+            <li class="list-item">
+              <span class="icon-tile"><fa-icon [name]="tool.icon" [size]="18" /></span>
+              <span class="list-item__main tool">
+                <strong>{{ tool.name }}</strong>
+                <span class="faint">{{ tool.reasonKey | translate }}</span>
+              </span>
+            </li>
+          }
+        </ul>
+      </section>
+
+      <section class="card card--soft card--stack">
+        <h2>{{ 'about.codeTitle' | translate }}</h2>
+        <p class="muted">{{ 'about.codeText' | translate }}</p>
+        <a class="link" [href]="repositoryUrl" target="_blank" rel="noopener">{{ 'about.repoLink' | translate }} →</a>
+      </section>
+    </div>
+  </div>
+
+  <footer class="faint text-center footer">{{ 'about.footer' | translate }}</footer>
+</div>

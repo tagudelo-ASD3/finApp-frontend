@@ -1,0 +1,41 @@
+<fa-dialog [title]="'accounts.new' | translate">
+  <form class="form" (ngSubmit)="save()">
+    <div class="field">
+      <span>{{ 'accounts.kind' | translate }}</span>
+      <div class="chip-group">
+        @for (option of kinds; track option) {
+          <button type="button" class="chip" [class.is-active]="kind() === option" (click)="kind.set(option)">
+            {{ 'accounts.kinds.' + option | translate }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <label class="field">
+      <span>{{ 'accounts.name' | translate }}</span>
+      <input class="input" name="name" [placeholder]="'accounts.namePlaceholder' | translate" [(ngModel)]="name" />
+    </label>
+
+    <label class="field">
+      <span>{{ (kind() === 'credit' ? 'accounts.usedQuota' : 'accounts.initialBalance') | translate }}</span>
+      <input class="input" type="number" name="balance" min="0" placeholder="0" [(ngModel)]="balance" />
+    </label>
+
+    <label class="pill-row pill-row--soft">
+      <span class="stack pill-row__text">
+        <strong>{{ 'accounts.autoTitle' | translate }}</strong>
+        <span class="faint">{{ 'accounts.autoToggleHint' | translate }}</span>
+      </span>
+      <span class="switch">
+        <input type="checkbox" name="auto" [(ngModel)]="auto" />
+        <span></span>
+      </span>
+    </label>
+
+    @if (showError()) {
+      <p class="form-error" role="alert">{{ 'accounts.nameError' | translate }}</p>
+    }
+
+    <button type="submit" class="btn btn--primary btn--block">{{ 'accounts.save' | translate }}</button>
+  </form>
+</fa-dialog>

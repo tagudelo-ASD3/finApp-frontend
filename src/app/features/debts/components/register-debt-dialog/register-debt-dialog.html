@@ -1,0 +1,40 @@
+<fa-dialog [title]="'debts.register' | translate">
+  <form class="form" (ngSubmit)="save()">
+    <label class="field">
+      <span>{{ 'debts.name' | translate }}</span>
+      <input class="input" name="name" [placeholder]="'debts.namePlaceholder' | translate" [(ngModel)]="name" />
+    </label>
+
+    <label class="field">
+      <span>{{ 'debts.lender' | translate }}</span>
+      <input class="input" name="lender" [placeholder]="'debts.lenderPlaceholder' | translate" [(ngModel)]="lender" />
+    </label>
+
+    <label class="field">
+      <span>{{ 'debts.currentBalance' | translate }}</span>
+      <input class="input input--amount" type="number" name="balance" min="0" placeholder="0" [(ngModel)]="balance" />
+    </label>
+
+    <div class="form__row">
+      <label class="field">
+        <span>{{ 'debts.rate' | translate }}</span>
+        <input class="input" type="number" name="rate" min="0" step="0.1" placeholder="1,8" [(ngModel)]="monthlyRate" />
+      </label>
+      <label class="field">
+        <span>{{ 'debts.installment' | translate }}</span>
+        <input class="input" type="number" name="installment" min="0" placeholder="0" [(ngModel)]="installment" />
+      </label>
+    </div>
+
+    <label class="field">
+      <span>{{ 'debts.dueDay' | translate }}</span>
+      <input class="input" type="number" name="dueDay" min="1" max="31" placeholder="15" [(ngModel)]="dueDay" />
+    </label>
+
+    @if (showError()) {
+      <p class="form-error" role="alert">{{ 'debts.formError' | translate }}</p>
+    }
+
+    <button type="submit" class="btn btn--primary btn--block">{{ 'debts.save' | translate }}</button>
+  </form>
+</fa-dialog>

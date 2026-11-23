@@ -1,0 +1,68 @@
+// Square tiles with an account's initials or a category icon.
+%tile {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+
+.initials {
+  @extend %tile;
+
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.initials--sm {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  font-size: 10.5px;
+}
+
+.initials--on-hero {
+  background: var(--surface);
+}
+
+.icon-tile {
+  @extend %tile;
+}
+
+.icon-tile--lg {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+}
+
+.icon-tile--accent {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.icon-tile--surface {
+  background: var(--surface);
+}
+
+// Round user avatar.
+.avatar {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 800;
+}
+
+.avatar--lg {
+  width: 72px;
+  height: 72px;
+  font-size: 24px;
+}
