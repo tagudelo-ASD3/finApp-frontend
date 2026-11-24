@@ -216,9 +216,10 @@ En la pantalla de inicio de sesión toca **"Usar cuenta de prueba"** y luego **"
 
 ## 🧪 Datos de prueba
 
-Mientras el backend no está listo, los datos salen de `src/mocks/`. Los cambios que hagas (nuevos movimientos, cuentas, límites…) se guardan en el `localStorage` del navegador con el prefijo `finapp.v1.`.
+Mientras el backend no está listo, los datos salen de `src/mocks/`. Los cambios que hagas (nuevos movimientos, cuentas, límites…) se guardan en el `localStorage` del navegador con el prefijo `finapp.v2.`.
 
 - 📆 Las fechas se calculan desde el día actual, así que el mes siempre tiene datos.
+- 🗓️ Al empezar un mes nuevo, los datos de prueba se reinician solos para que el mes siempre tenga información.
 - ♻️ Para volver a los datos originales: **Perfil y ajustes → Restablecer datos de prueba**.
 
 ## 🌎 Textos e idioma

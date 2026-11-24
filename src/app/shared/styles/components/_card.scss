@@ -4,11 +4,9 @@
   border-radius: var(--radius-lg);
   background: var(--surface);
   box-shadow: var(--shadow);
-  // Long words (names, emails) break instead of spilling out of the card.
   overflow-wrap: break-word;
 }
 
-// Cards whose content is a vertical list of label, amount and note.
 .card--stack {
   display: flex;
   flex-direction: column;
@@ -21,7 +19,6 @@
   box-shadow: none;
 }
 
-// Hero cards size their big amount to the card width (see .amount--xl).
 .card--hero {
   container-type: inline-size;
 }
@@ -32,7 +29,6 @@
   box-shadow: none;
 }
 
-// Clickable card (anchor or button) that looks like a regular card.
 .card--link {
   color: inherit;
   text-decoration: none;

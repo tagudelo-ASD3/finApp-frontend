@@ -1,17 +1,15 @@
-// Mock dates are built from today's date so the demo always looks current.
+// Dates stay inside the current month and never pass the current moment, so monthly totals never change.
+const now = new Date();
+const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
 
-const today = new Date();
-
-/** A moment N days before today at the given hour. */
-export function daysAgo(days: number, hour = 12, minute = 0): string {
-  const date = new Date(today);
-  date.setDate(date.getDate() - days);
-  date.setHours(hour, minute, 0, 0);
-  return date.toISOString();
+function clampToThisMonth(date: Date): string {
+  return new Date(Math.min(Math.max(date.getTime(), monthStart.getTime()), now.getTime())).toISOString();
 }
 
-/** A day of the current month, never later than today. */
+export function daysAgo(days: number, hour = 12, minute = 0): string {
+  return clampToThisMonth(new Date(now.getFullYear(), now.getMonth(), now.getDate() - days, hour, minute));
+}
+
 export function dayOfThisMonth(day: number, hour = 12): string {
-  const safeDay = Math.min(day, today.getDate());
-  return new Date(today.getFullYear(), today.getMonth(), safeDay, hour).toISOString();
+  return clampToThisMonth(new Date(now.getFullYear(), now.getMonth(), day, hour));
 }

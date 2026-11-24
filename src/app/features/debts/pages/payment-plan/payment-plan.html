@@ -80,7 +80,7 @@
                 <span class="steps__number">{{ i + 1 }}</span>
                 <div class="stack grow">
                   <strong>{{ debt.name }}</strong>
-                  <span class="faint">{{ debt.lender }} · {{ debt.monthlyRate }} % m.v.</span>
+                  <span class="faint">{{ debt.lender }} · {{ debt.monthlyRate | number: '1.0-2' }} % m.v.</span>
                 </div>
                 <strong class="amount">{{ debt.balance | copCurrency }}</strong>
               </li>

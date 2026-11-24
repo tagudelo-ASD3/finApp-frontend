@@ -1,6 +1,5 @@
 export type MovementType = 'expense' | 'income';
 
-/** auto = read from a bank notification or SMS, manual = typed by the user. */
 export type MovementSource = 'auto' | 'manual';
 
 export interface Movement {
@@ -23,10 +22,8 @@ export interface Category {
 
 export type NewMovement = Omit<Movement, 'id' | 'source'>;
 
-/** Filter of the movement list by type. */
-export type MovementTypeFilter = 'all' | Movement['type'];
+export type MovementTypeFilter = 'all' | MovementType;
 
-/** Movements of one day, as grouped in the movement list. */
 export interface MovementDayGroup {
   date: string;
   total: number;

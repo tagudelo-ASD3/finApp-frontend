@@ -1,4 +1,3 @@
-// On/off toggle: <label class="switch"><input type="checkbox" /><span></span></label>
 .switch {
   position: relative;
   display: inline-block;
@@ -50,7 +49,6 @@
   }
 }
 
-// Rounded row with an icon, a text and something on the right (switch, arrow…).
 .pill-row {
   display: flex;
   align-items: center;

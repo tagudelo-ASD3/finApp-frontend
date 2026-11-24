@@ -1,19 +1,19 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { UiService } from '../../../../core/services/ui.service';
 import { Icon } from '../../../../shared/components/icon/icon';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
 import { CopCurrencyPipe } from '../../../../shared/pipes/cop-currency.pipe';
 import { DebtsService } from '../../../../core/services/debts.service';
-import { PlanStrategy } from '../../../../core/models/debt.model';
+import { PlanComparison, PlanStrategy } from '../../../../core/models/debt.model';
 
 const CHART_WIDTH = 600;
 const CHART_HEIGHT = 200;
 
 @Component({
   selector: 'fa-payment-plan',
-  imports: [DatePipe, TranslatePipe, Icon, PageHeader, CopCurrencyPipe],
+  imports: [DecimalPipe, DatePipe, TranslatePipe, Icon, PageHeader, CopCurrencyPipe],
   templateUrl: './payment-plan.html',
   styleUrl: './payment-plan.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,10 +27,10 @@ export class PaymentPlanPage {
   protected readonly chartWidth = CHART_WIDTH;
   protected readonly chartHeight = CHART_HEIGHT;
 
-  protected readonly plans = computed(() => ({
+  protected readonly plans = computed<PlanComparison>(() => ({
     avalanche: this.debts.plan('avalanche', this.debts.planBudget()),
     snowball: this.debts.plan('snowball', this.debts.planBudget()),
-    minimum: this.debts.plan('avalanche', this.debts.minimumMonthlyPayment()),
+    minimum: this.debts.minimumPlan(),
   }));
 
   protected readonly selected = computed(() => this.plans()[this.strategy()]);
@@ -41,12 +41,11 @@ export class PaymentPlanPage {
   });
 
   protected readonly savedVsMinimum = computed(() =>
-    Math.max(this.plans().minimum.totalInterest - this.selected().totalInterest, 0),
+    this.debts.interestSaved(this.strategy(), this.debts.planBudget()),
   );
 
   protected readonly monthsSaved = computed(() => Math.max(this.plans().minimum.months - this.selected().months, 0));
 
-  /** SVG path of the remaining debt month by month. */
   protected readonly chartPath = computed(() => this.toPath(this.selected().balances));
   protected readonly minimumPath = computed(() => this.toPath(this.plans().minimum.balances));
 

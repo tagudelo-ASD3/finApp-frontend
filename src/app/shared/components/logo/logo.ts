@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 
-/** FinApp "wallet" logo: espresso wallet, caramel card and the F. */
 @Component({
   selector: 'fa-logo',
   templateUrl: './logo.html',

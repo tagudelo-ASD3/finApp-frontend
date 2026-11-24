@@ -24,7 +24,7 @@
         @if (nextDue(); as due) {
           <span class="label">{{ 'debts.nextInstallment' | translate }}</span>
           <p class="amount amount--lg">{{ debt.installment | copCurrency }}</p>
-          <p class="faint">{{ due | date: 'EEEE d \'de\' MMMM' }} · {{ 'debts.inDays' | translate: { days: debts.daysUntilDue(debt) } }}</p>
+          <p class="faint">{{ due | date: 'EEEE d \'de\' MMMM' }} · {{ 'debts.inDays' | countKey: debts.daysUntilDue(debt) | translate: { days: debts.daysUntilDue(debt) } }}</p>
         } @else {
           <span class="label">{{ 'debts.status.paid' | translate }}</span>
           <p class="muted">{{ 'debts.paidMessage' | translate }}</p>
@@ -36,7 +36,7 @@
         <dl class="facts">
           <div>
             <dt>{{ 'debts.rate' | translate }}</dt>
-            <dd>{{ debt.monthlyRate }} % m.v.</dd>
+            <dd>{{ debt.monthlyRate | number: '1.0-2' }} % m.v.</dd>
           </div>
           <div>
             <dt>{{ 'debts.installment' | translate }}</dt>

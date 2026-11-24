@@ -1,10 +1,8 @@
-// Takes the remaining space in a flex row.
 .grow {
   flex: 1;
   min-width: 0;
 }
 
-// Hidden on screen but read by screen readers.
 .visually-hidden {
   position: absolute;
   width: 1px;

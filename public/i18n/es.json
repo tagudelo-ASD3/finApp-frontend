@@ -1,7 +1,11 @@
 {
   "common": {
     "close": "Cerrar",
-    "days": "días",
+    "days": {
+      "0": "hoy",
+      "1": "día",
+      "n": "días"
+    },
     "of": "de",
     "see": "Ver",
     "seeAll": "Ver todos",
@@ -183,7 +187,11 @@
     "used": "usado",
     "spentOfLimit": "Gastado este mes",
     "available": "Disponible",
-    "daysLeft": "Quedan {{days}} días",
+    "daysLeft": {
+      "0": "Último día del mes",
+      "1": "Queda 1 día",
+      "n": "Quedan {{days}} días"
+    },
     "weekly": "Gasto por semana",
     "week": "Sem",
     "dailyAverage": "Promedio diario",
@@ -218,7 +226,11 @@
     "myDebts": "Mis deudas",
     "status": {
       "paid": "Pagada",
-      "dueSoon": "Vence en {{days}} días"
+      "dueSoon": {
+        "0": "Vence hoy",
+        "1": "Vence mañana",
+        "n": "Vence en {{days}} días"
+      }
     },
     "installmentOf": "Cuota {{amount}}",
     "registerPayment": "Registrar pago",
@@ -226,7 +238,11 @@
     "currentBalance": "Saldo actual",
     "paidOf": "{{percent}} % pagado de {{amount}}",
     "nextInstallment": "Próxima cuota",
-    "inDays": "en {{days}} días",
+    "inDays": {
+      "0": "hoy",
+      "1": "mañana",
+      "n": "en {{days}} días"
+    },
     "paidMessage": "Esta deuda ya está saldada. ¡Bien hecho!",
     "conditions": "Condiciones",
     "rate": "Tasa mensual (%)",
@@ -307,7 +323,28 @@
     "title": "Notificaciones",
     "unread": "{{count}} sin leer",
     "markAll": "Marcar todas como leídas",
-    "empty": "No tienes notificaciones."
+    "empty": "No tienes notificaciones.",
+    "detected": {
+      "title": "Movimiento registrado desde {{account}}",
+      "expense": "Gasto de {{amount}} en {{description}}.",
+      "income": "Ingreso de {{amount}}: {{description}}."
+    },
+    "payment": {
+      "title": "Se acerca el pago de {{name}}",
+      "message": {
+        "0": "La cuota de {{amount}} vence hoy. Págala a tiempo y evita intereses de mora.",
+        "1": "La cuota de {{amount}} vence mañana. Págala a tiempo y evita intereses de mora.",
+        "n": "La cuota de {{amount}} vence en {{days}} días. Págala a tiempo y evita intereses de mora."
+      }
+    },
+    "budget": {
+      "title": "Pasaste el límite de {{category}}",
+      "message": "Llevas {{spent}} de {{limit}} este mes."
+    },
+    "tip": {
+      "title": "Puedes ahorrar en intereses",
+      "message": "Si pagas {{budget}} al mes con el método avalancha, ahorras {{amount}} en intereses frente a pagar solo el mínimo."
+    }
   },
   "profile": {
     "title": "Perfil y ajustes",

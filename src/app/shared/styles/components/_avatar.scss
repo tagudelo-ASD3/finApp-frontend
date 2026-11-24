@@ -1,4 +1,3 @@
-// Square tiles with an account's initials or a category icon.
 %tile {
   display: inline-grid;
   place-items: center;
@@ -48,7 +47,6 @@
   background: var(--surface);
 }
 
-// Round user avatar.
 .avatar {
   display: grid;
   place-items: center;

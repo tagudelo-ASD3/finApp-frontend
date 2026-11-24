@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CountKeyPipe } from '../../../../shared/pipes/count-key.pipe';
 import { UiService } from '../../../../core/services/ui.service';
 import { Icon } from '../../../../shared/components/icon/icon';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
@@ -9,7 +10,7 @@ import { BudgetsService } from '../../../../core/services/budgets.service';
 
 @Component({
   selector: 'fa-budget-overview',
-  imports: [DatePipe, TranslatePipe, Icon, PageHeader, CopCurrencyPipe],
+  imports: [DatePipe, TranslatePipe, Icon, PageHeader, CopCurrencyPipe, CountKeyPipe],
   templateUrl: './budget-overview.html',
   styleUrl: './budget-overview.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

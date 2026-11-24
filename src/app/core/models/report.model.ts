@@ -1,4 +1,3 @@
-/** Part of a total (a category or an account) with its percentage. */
 export interface Share {
   id: string;
   label: string;
@@ -7,9 +6,11 @@ export interface Share {
   percent: number;
 }
 
-/** Income and expenses of one month. */
-export interface MonthTotals {
-  label: string;
+export interface MonthAmounts {
   income: number;
   expense: number;
+}
+
+export interface MonthTotals extends MonthAmounts {
+  label: string;
 }

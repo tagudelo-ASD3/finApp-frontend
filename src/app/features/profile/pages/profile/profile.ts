@@ -49,7 +49,6 @@ export class Profile {
     void this.router.navigate(['/login']);
   }
 
-  /** Deletes every change saved in the browser and starts again from the demo data. */
   protected resetDemoData(): void {
     clearPersistedData();
     window.location.reload();

@@ -3,10 +3,10 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { Dialog } from '../../../../shared/components/dialog/dialog';
 import { Icon } from '../../../../shared/components/icon/icon';
 import { RelativeDatePipe } from '../../../../shared/pipes/relative-date.pipe';
-import { AppNotification } from '../../../../core/models/notification.model';
+import { NotificationKind } from '../../../../core/models/notification.model';
 import { NotificationsService } from '../../../../core/services/notifications.service';
 
-const KIND_ICONS: Record<AppNotification['kind'], string> = {
+const KIND_ICONS: Record<NotificationKind, string> = {
   detected: 'zap',
   payment: 'calendar',
   budget: 'pie',

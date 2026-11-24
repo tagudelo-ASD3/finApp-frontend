@@ -16,7 +16,6 @@
   }
 }
 
-// Whole row is a link to a detail page.
 .list-item--link {
   color: inherit;
   text-decoration: none;
@@ -37,13 +36,11 @@ li:last-child > .list-item {
   flex-direction: column;
   min-width: 0;
 
-  // Names wrap to a second line instead of being cut.
   strong {
     overflow-wrap: anywhere;
   }
 }
 
-// Label / value pairs of a detail page.
 .facts {
   display: flex;
   flex-direction: column;
@@ -74,7 +71,6 @@ li:last-child > .list-item {
   }
 }
 
-// Numbered steps of a guide.
 .steps {
   display: flex;
   flex-direction: column;
@@ -100,7 +96,6 @@ li:last-child > .list-item {
   font-weight: 800;
 }
 
-// Steps where each row is a single line (ranking, order of payment).
 .steps--compact {
   margin-bottom: 0;
 

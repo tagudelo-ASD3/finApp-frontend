@@ -1,12 +1,10 @@
 import { WritableSignal, effect, signal } from '@angular/core';
 
-const STORAGE_PREFIX = 'finapp.v1.';
+const STORAGE_PREFIX = 'finapp.v2.';
+const DEMO_MONTH_KEY = STORAGE_PREFIX + 'demo-month';
+const KEPT_KEYS = ['session', 'dark-mode'].map((key) => STORAGE_PREFIX + key);
 
-/**
- * Creates a signal that starts from localStorage (or the given initial value)
- * and writes every change back. Must be called inside an injection context.
- * The app has no backend yet, so this is what keeps the mock data between visits.
- */
+// Signal saved in localStorage; it keeps the mock data between visits until there is a backend.
 export function persistedSignal<T>(key: string, initialValue: T): WritableSignal<T> {
   const storageKey = STORAGE_PREFIX + key;
   const state = signal<T>(readValue(storageKey, initialValue));
@@ -16,21 +14,34 @@ export function persistedSignal<T>(key: string, initialValue: T): WritableSignal
     try {
       localStorage.setItem(storageKey, JSON.stringify(value));
     } catch {
-      // Storage can be blocked (private mode); the app keeps working in memory.
+      // Private mode can block storage; the app keeps working in memory.
     }
   });
 
   return state;
 }
 
-/** Removes every value saved by the app so the mock data starts fresh. */
 export function clearPersistedData(): void {
   try {
     Object.keys(localStorage)
-      .filter((key) => key.startsWith(STORAGE_PREFIX))
+      .filter((key) => key.startsWith('finapp.') && !KEPT_KEYS.includes(key))
       .forEach((key) => localStorage.removeItem(key));
   } catch {
-    // Nothing to clear when storage is not available.
+    return;
+  }
+}
+
+// Mock dates depend on today, so the demo data starts again when a new month begins.
+export function refreshDemoDataForNewMonth(): void {
+  const today = new Date();
+  const currentMonth = `${today.getFullYear()}-${today.getMonth() + 1}`;
+  try {
+    if (localStorage.getItem(DEMO_MONTH_KEY) !== currentMonth) {
+      clearPersistedData();
+      localStorage.setItem(DEMO_MONTH_KEY, currentMonth);
+    }
+  } catch {
+    return;
   }
 }
 

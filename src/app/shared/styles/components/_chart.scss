@@ -1,4 +1,3 @@
-// Small bar chart used inside stat cards.
 .bars {
   display: flex;
   align-items: flex-end;
@@ -17,7 +16,6 @@
   }
 }
 
-// Colored dots of a chart legend.
 .legend {
   display: flex;
   flex-wrap: wrap;

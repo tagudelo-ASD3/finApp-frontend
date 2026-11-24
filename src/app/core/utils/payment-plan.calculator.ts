@@ -1,14 +1,11 @@
-import { Debt, PaymentPlan, PlanStrategy } from '../models/debt.model';
+import { Debt, DebtBalance, PaymentPlan, PlanStrategy } from '../models/debt.model';
 
 const MAX_MONTHS = 120;
 
-/**
- * Simulates paying every active debt with a fixed monthly budget.
- * Each month interest is added, every debt receives its installment and the money left
- * goes to one debt at a time: the highest rate first (avalanche) or the smallest balance first (snowball).
- */
+// Each month adds interest, pays every installment and sends the money left to one debt at a time:
+// highest rate first (avalanche) or smallest balance first (snowball).
 export function buildPaymentPlan(debts: Debt[], monthlyBudget: number, strategy: PlanStrategy): PaymentPlan {
-  const active = debts
+  const active: DebtBalance[] = debts
     .filter((debt) => debt.balance > 0)
     .map((debt) => ({ debt, balance: debt.balance }));
 

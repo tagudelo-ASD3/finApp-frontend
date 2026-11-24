@@ -7,6 +7,7 @@ import { DEMO_CREDENTIALS } from '../../../../../mocks/auth.mock';
 import { ThemeService } from '../../../../core/services/theme.service';
 import { UiService } from '../../../../core/services/ui.service';
 import { Logo } from '../../../../shared/components/logo/logo';
+import { SocialProvider } from '../../../../core/models/session.model';
 
 @Component({
   selector: 'fa-login',
@@ -40,7 +41,7 @@ export class Login {
     this.showError.set(false);
   }
 
-  protected continueWith(provider: 'google' | 'apple'): void {
+  protected continueWith(provider: SocialProvider): void {
     this.auth.loginWith(provider);
     void this.router.navigate(['/dashboard']);
   }

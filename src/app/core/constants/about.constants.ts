@@ -1,10 +1,6 @@
 import { Tool } from '../models/tool.model';
 
-/**
- * Content of the public "Cómo se construyó" page.
- * Paste the YouTube video id here once the demo video is uploaded
- * (from https://youtu.be/AbC123xyz the id is AbC123xyz).
- */
+// YouTube video id: from https://youtu.be/AbC123xyz the id is AbC123xyz.
 export const DEMO_VIDEO_ID = '';
 
 export const REPOSITORY_URL = 'https://github.com/tagudelo-ASD3/finApp-frontend';
@@ -20,5 +16,4 @@ export const TOOLS: Tool[] = [
   { name: 'GitHub Pages', icon: 'globe', reasonKey: 'about.tools.pages' },
 ];
 
-/** Steps followed to build the site, shown as a numbered list. */
 export const BUILD_STEPS = ['design', 'setup', 'structure', 'styles', 'data', 'pages', 'deploy'] as const;

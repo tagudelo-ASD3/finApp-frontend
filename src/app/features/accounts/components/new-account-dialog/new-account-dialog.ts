@@ -4,7 +4,8 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { UiService } from '../../../../core/services/ui.service';
 import { Dialog } from '../../../../shared/components/dialog/dialog';
 import { AccountsService } from '../../../../core/services/accounts.service';
-import { Account } from '../../../../core/models/account.model';
+import { AccountKind } from '../../../../core/models/account.model';
+import { ACCOUNT_KIND_DESCRIPTIONS } from '../../../../core/constants/account.constants';
 
 @Component({
   selector: 'fa-new-account-dialog',
@@ -16,8 +17,8 @@ export class NewAccountDialog {
   private readonly ui = inject(UiService);
   private readonly accounts = inject(AccountsService);
 
-  protected readonly kinds: Account['kind'][] = ['bank', 'wallet', 'cash', 'credit'];
-  protected readonly kind = signal<Account['kind']>('bank');
+  protected readonly kinds: AccountKind[] = ['bank', 'wallet', 'cash', 'credit'];
+  protected readonly kind = signal<AccountKind>('bank');
   protected readonly name = signal('');
   protected readonly balance = signal<number | null>(null);
   protected readonly auto = signal(true);
@@ -34,21 +35,11 @@ export class NewAccountDialog {
     this.accounts.add({
       name,
       kind,
-      description: kindDescription(kind),
+      description: ACCOUNT_KIND_DESCRIPTIONS[kind],
       balance: kind === 'credit' ? -amount : amount,
       sync: kind === 'cash' || !this.auto() ? 'manual' : 'auto',
     });
     this.ui.close();
     this.ui.notify('accounts.saved');
   }
-}
-
-function kindDescription(kind: Account['kind']): string {
-  const descriptions: Record<Account['kind'], string> = {
-    bank: 'Cuenta de ahorros',
-    wallet: 'Billetera digital',
-    cash: 'Registro manual',
-    credit: 'Tarjeta de crédito',
-  };
-  return descriptions[kind];
 }

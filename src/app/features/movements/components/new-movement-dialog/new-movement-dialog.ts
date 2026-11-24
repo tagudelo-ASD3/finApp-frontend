@@ -6,7 +6,7 @@ import { Dialog } from '../../../../shared/components/dialog/dialog';
 import { Icon } from '../../../../shared/components/icon/icon';
 import { AccountsService } from '../../../../core/services/accounts.service';
 import { MovementsService } from '../../../../core/services/movements.service';
-import { Movement } from '../../../../core/models/movement.model';
+import { MovementType } from '../../../../core/models/movement.model';
 
 function todayInputValue(): string {
   const now = new Date();
@@ -26,7 +26,7 @@ export class NewMovementDialog {
   private readonly accounts = inject(AccountsService);
   protected readonly movements = inject(MovementsService);
 
-  protected readonly type = signal<Movement['type']>('expense');
+  protected readonly type = signal<MovementType>('expense');
   protected readonly amount = signal<number | null>(null);
   protected readonly description = signal('');
   protected readonly categoryId = signal('groceries');
@@ -38,7 +38,7 @@ export class NewMovementDialog {
     this.accounts.accounts().filter((account) => account.sync !== 'inactive'),
   );
 
-  protected setType(type: Movement['type']): void {
+  protected setType(type: MovementType): void {
     this.type.set(type);
     this.categoryId.set(type === 'income' ? 'income' : 'groceries');
   }

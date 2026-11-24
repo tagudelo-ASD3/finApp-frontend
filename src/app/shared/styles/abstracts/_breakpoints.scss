@@ -1,8 +1,5 @@
 @use 'sass:map';
 
-// Breakpoints shared by global styles and component styles.
-// Usage in a component: @use 'abstracts/breakpoints' as bp;  @include bp.down(md) { ... }
-
 $breakpoints: (
   sm: 520px,
   md: 720px,

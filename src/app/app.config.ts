@@ -18,6 +18,8 @@ import { TranslateService, provideTranslateService } from '@ngx-translate/core';
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 import { firstValueFrom } from 'rxjs';
 import { routes } from './app.routes';
+import { refreshDemoDataForNewMonth } from './core/utils/persisted-signal';
+import { ThemeService } from './core/services/theme.service';
 
 registerLocaleData(localeEsCo);
 
@@ -37,7 +39,9 @@ export const appConfig: ApplicationConfig = {
       fallbackLang: 'es',
       loader: provideTranslateHttpLoader({ prefix: './i18n/', suffix: '.json' }),
     }),
-    // Load the UI texts before the first render so no translation keys flash on screen.
+    provideAppInitializer(() => refreshDemoDataForNewMonth()),
+    provideAppInitializer(() => void inject(ThemeService)),
+    // Texts load before the first render so no translation keys flash on screen.
     provideAppInitializer(() => firstValueFrom(inject(TranslateService).use('es'))),
     { provide: LOCALE_ID, useValue: 'es-CO' },
   ],

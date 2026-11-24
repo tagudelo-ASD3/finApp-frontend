@@ -49,7 +49,6 @@
   align-items: center;
   gap: 16px;
 
-  // When the column is narrow the button drops below instead of squeezing the amount.
   .grow {
     flex-basis: 140px;
   }
@@ -102,12 +101,18 @@
   }
 
   .balance,
-  .side-stats {
+  .side-stats,
+  .summary {
     grid-column: span 2;
   }
 
-  .side-stats {
+  .side-stats,
+  .summary {
     flex-direction: row;
+
+    > * {
+      flex: 1;
+    }
   }
 }
 
@@ -117,11 +122,13 @@
   }
 
   .balance,
-  .side-stats {
+  .side-stats,
+  .summary {
     grid-column: auto;
   }
 
-  .side-stats {
+  .side-stats,
+  .summary {
     flex-direction: column;
   }
 }

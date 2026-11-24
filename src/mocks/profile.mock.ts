@@ -1,6 +1,5 @@
 import { UserPreferences, UserProfile } from '../app/core/models/user-profile.model';
 
-// Fictional demo user used across the prototype.
 export const USER_PROFILE_MOCK: UserProfile = {
   fullName: 'Andrea Rojas',
   email: 'andrea.rojas@correo.com',

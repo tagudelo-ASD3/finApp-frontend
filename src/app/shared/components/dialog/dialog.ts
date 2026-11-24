@@ -3,7 +3,6 @@ import { TranslatePipe } from '@ngx-translate/core';
 import { UiService } from '../../../core/services/ui.service';
 import { Icon } from '../icon/icon';
 
-/** Overlay window used by every form: dark backdrop, title and close button. */
 @Component({
   selector: 'fa-dialog',
   imports: [TranslatePipe, Icon],

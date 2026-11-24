@@ -17,5 +17,4 @@ export interface UserPreferences {
   twoStepVerification: boolean;
 }
 
-/** Preferences that are turned on and off with a switch. */
 export type TogglePreference = 'paymentReminders' | 'biometricLogin' | 'twoStepVerification';

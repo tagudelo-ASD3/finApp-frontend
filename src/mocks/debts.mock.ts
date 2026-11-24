@@ -26,6 +26,18 @@ export const DEBTS_MOCK: Debt[] = [
     cutoffDay: 13,
   },
   {
+    id: 'phone',
+    name: 'Celular a cuotas',
+    lender: 'Falabella',
+    initials: 'CF',
+    originalAmount: 1800000,
+    balance: 720000,
+    monthlyRate: 1.9,
+    installment: 150000,
+    dueDay: 10,
+    cutoffDay: 25,
+  },
+  {
     id: 'family',
     name: 'Préstamo familiar',
     lender: 'Registro manual',
@@ -39,7 +51,6 @@ export const DEBTS_MOCK: Debt[] = [
   },
 ];
 
-/** Fixed monthly payments that are not debts but appear in the payment calendar. */
 export const RECURRING_PAYMENTS_MOCK: RecurringPayment[] = [
   { id: 'rent', name: 'Arriendo', amount: 900000, dueDay: 5 },
   { id: 'netflix', name: 'Netflix', amount: 38900, dueDay: 20 },

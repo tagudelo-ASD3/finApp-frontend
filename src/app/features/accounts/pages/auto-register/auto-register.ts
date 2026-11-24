@@ -6,10 +6,6 @@ import { PageHeader } from '../../../../shared/components/page-header/page-heade
 import { AccountsService } from '../../../../core/services/accounts.service';
 import { AlertPlatform } from '../../../../core/models/account.model';
 
-/**
- * "Conectar avisos": lets the user pick which bank apps FinApp listens to and explains,
- * step by step, how to give the permission on Android or set up the shortcut on iPhone.
- */
 @Component({
   selector: 'fa-auto-register',
   imports: [TranslatePipe, Icon, PageHeader],

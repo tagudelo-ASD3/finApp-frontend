@@ -9,7 +9,7 @@ import { CopCurrencyPipe } from '../../../../shared/pipes/cop-currency.pipe';
 import { RelativeDatePipe } from '../../../../shared/pipes/relative-date.pipe';
 import { AccountsService } from '../../../../core/services/accounts.service';
 import { MovementsService, signedAmount } from '../../../../core/services/movements.service';
-import { Movement, MovementDayGroup, MovementTypeFilter } from '../../../../core/models/movement.model';
+import { MovementDayGroup, MovementTypeFilter } from '../../../../core/models/movement.model';
 
 @Component({
   selector: 'fa-movement-list',
@@ -23,7 +23,6 @@ export class MovementList {
   protected readonly movements = inject(MovementsService);
   protected readonly accounts = inject(AccountsService);
 
-  /** Search text that comes from the header search box (?q=). */
   readonly q = input<string | undefined>();
 
   protected readonly query = linkedSignal(() => this.q() ?? '');

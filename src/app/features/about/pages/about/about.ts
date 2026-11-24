@@ -7,7 +7,6 @@ import { Icon } from '../../../../shared/components/icon/icon';
 import { Logo } from '../../../../shared/components/logo/logo';
 import { BUILD_STEPS, DEMO_VIDEO_ID, REPOSITORY_URL, TOOLS } from '../../../../core/constants/about.constants';
 
-/** Public page that explains how the site was built and embeds the demo video. */
 @Component({
   selector: 'fa-about',
   imports: [RouterLink, TranslatePipe, Icon, Logo],

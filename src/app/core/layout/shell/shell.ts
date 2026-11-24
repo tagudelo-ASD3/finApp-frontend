@@ -13,7 +13,6 @@ import { ThemeService } from '../../services/theme.service';
 import { UiService } from '../../services/ui.service';
 import { NavItem } from '../../models/nav-item.model';
 
-/** Signed-in layout: sidebar navigation, the current page and the overlay windows. */
 @Component({
   selector: 'fa-shell',
   imports: [

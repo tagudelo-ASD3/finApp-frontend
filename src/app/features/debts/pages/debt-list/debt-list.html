@@ -40,7 +40,7 @@
             <span class="initials">{{ debt.initials }}</span>
             <span class="list-item__main">
               <strong>{{ debt.name }}</strong>
-              <span class="faint">{{ debt.lender }}@if (debt.monthlyRate > 0) { · {{ debt.monthlyRate }} % m.v.}</span>
+              <span class="faint">{{ debt.lender }}@if (debt.monthlyRate > 0) { · {{ debt.monthlyRate | number: '1.0-2' }} % m.v.}</span>
               <div class="progress debt__progress">
                 <div class="progress__bar progress__bar--accent" [style.width.%]="debts.paidPercent(debt)"></div>
               </div>
@@ -52,7 +52,7 @@
                   <span class="chip chip--good">{{ 'debts.status.paid' | translate }}</span>
                 }
                 @case ('due-soon') {
-                  <span class="chip chip--warn">{{ 'debts.status.dueSoon' | translate: { days: debts.daysUntilDue(debt) } }}</span>
+                  <span class="chip chip--warn">{{ 'debts.status.dueSoon' | countKey: debts.daysUntilDue(debt) | translate: { days: debts.daysUntilDue(debt) } }}</span>
                 }
                 @default {
                   <span class="chip">{{ 'debts.installmentOf' | translate: { amount: (debt.installment | copCurrency) } }}</span>

@@ -22,7 +22,6 @@ export class MovementsService {
   readonly categories: readonly Category[] = CATEGORIES_MOCK;
   readonly expenseCategories = CATEGORIES_MOCK.filter((category) => category.type === 'expense');
 
-  /** Every movement, newest first. */
   readonly all = computed(() => [...this.store()].sort((a, b) => b.date.localeCompare(a.date)));
 
   readonly thisMonth = computed(() => {
@@ -54,7 +53,6 @@ export class MovementsService {
   category(id: string): Category {
     return this.categories.find((category) => category.id === id) ?? this.categories[0];
   }
-
 
   add(input: NewMovement): Movement {
     const movement: Movement = { ...input, id: crypto.randomUUID(), source: 'manual' };

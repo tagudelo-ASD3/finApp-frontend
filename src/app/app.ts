@@ -1,6 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'fa-root',
@@ -8,7 +7,4 @@ import { ThemeService } from './core/services/theme.service';
   templateUrl: './app.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {
-  // Injected here so the saved theme is applied before any page renders.
-  private readonly theme = inject(ThemeService);
-}
+export class App {}

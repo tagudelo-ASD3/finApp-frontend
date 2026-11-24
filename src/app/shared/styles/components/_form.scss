@@ -1,4 +1,3 @@
-// Vertical form with evenly spaced fields.
 .form {
   display: flex;
   flex-direction: column;
@@ -63,7 +62,6 @@ select.input {
   background-size: 5px 5px;
 }
 
-// Rounded search box with an icon.
 .search-box {
   display: flex;
   align-items: center;

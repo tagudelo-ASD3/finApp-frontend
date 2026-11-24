@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CountKeyPipe } from '../../../../shared/pipes/count-key.pipe';
 import { UiService } from '../../../../core/services/ui.service';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
 import { CopCurrencyPipe } from '../../../../shared/pipes/cop-currency.pipe';
@@ -13,7 +14,7 @@ const SCHEDULE_MONTHS = 6;
 
 @Component({
   selector: 'fa-debt-detail',
-  imports: [DatePipe, RouterLink, TranslatePipe, PageHeader, CopCurrencyPipe],
+  imports: [DecimalPipe, DatePipe, RouterLink, TranslatePipe, PageHeader, CopCurrencyPipe, CountKeyPipe],
   templateUrl: './debt-detail.html',
   styleUrl: './debt-detail.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -22,7 +23,6 @@ export class DebtDetail {
   private readonly ui = inject(UiService);
   protected readonly debts = inject(DebtsService);
 
-  /** Route parameter :id. */
   readonly id = input.required<string>();
 
   protected readonly debt = computed(() => this.debts.byId(this.id()));
@@ -32,13 +32,11 @@ export class DebtDetail {
     return debt?.dueDay ? nextDateForDay(debt.dueDay) : null;
   });
 
-  /** Interest the debt generates this month at its current balance. */
   protected readonly monthlyInterest = computed(() => {
     const debt = this.debt();
     return debt ? Math.round(debt.balance * (debt.monthlyRate / 100)) : 0;
   });
 
-  /** Upcoming installments: how much goes to interest and how much lowers the balance. */
   protected readonly schedule = computed<InstallmentRow[]>(() => {
     const debt = this.debt();
     const due = this.nextDue();

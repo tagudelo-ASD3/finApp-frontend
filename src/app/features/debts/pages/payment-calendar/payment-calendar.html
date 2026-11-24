@@ -54,7 +54,7 @@
                 } @else if (payment.daysLeft === 0) {
                   {{ 'calendar.today' | translate }}
                 } @else {
-                  {{ 'debts.inDays' | translate: { days: payment.daysLeft } }}
+                  {{ 'debts.inDays' | countKey: payment.daysLeft | translate: { days: payment.daysLeft } }}
                 }
               </span>
             </span>

@@ -1,12 +1,9 @@
 import { Injectable, computed } from '@angular/core';
 import { persistedSignal } from '../utils/persisted-signal';
-import { LoginProvider, Session } from '../models/session.model';
+import { LoginProvider, Session, SocialProvider } from '../models/session.model';
 import { DEMO_CREDENTIALS } from '../../../mocks/auth.mock';
 
-/**
- * Mock authentication. The real version will call POST /api/v1/auth/login
- * on finapp-api and keep the JWT; for now any valid email and password works.
- */
+// Mock login; the real version will call POST /api/v1/auth/login on finapp-api.
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly session = persistedSignal<Session | null>('session', null);
@@ -22,7 +19,7 @@ export class AuthService {
     return isValid;
   }
 
-  loginWith(provider: Exclude<LoginProvider, 'email'>): void {
+  loginWith(provider: SocialProvider): void {
     this.startSession(DEMO_CREDENTIALS.email, provider);
   }
 

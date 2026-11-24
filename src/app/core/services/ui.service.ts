@@ -1,7 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import { DialogName } from '../models/dialog.model';
 
-/** Controls which overlay window is open and shows short confirmation messages. */
 @Injectable({ providedIn: 'root' })
 export class UiService {
   readonly openDialog = signal<DialogName | null>(null);
@@ -17,7 +16,6 @@ export class UiService {
     this.openDialog.set(null);
   }
 
-  /** Shows a translated message for a few seconds. */
   notify(translationKey: string): void {
     clearTimeout(this.toastTimer);
     this.toastKey.set(translationKey);

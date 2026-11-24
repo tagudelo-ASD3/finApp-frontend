@@ -1,6 +1,5 @@
 import { BudgetLimit } from '../app/core/models/budget.model';
 
-// Monthly limits per category; together they add up to $ 2.410.000.
 export const BUDGET_LIMITS_MOCK: BudgetLimit[] = [
   { categoryId: 'groceries', limit: 600000 },
   { categoryId: 'home', limit: 950000 },

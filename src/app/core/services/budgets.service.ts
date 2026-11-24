@@ -53,7 +53,6 @@ export class BudgetsService {
     return Math.round(this.totalLimit() / daysInMonth(today.getFullYear(), today.getMonth()));
   });
 
-  /** How far spending runs above (+) or below (−) the ideal pace for this day of the month, in percent. */
   readonly paceDifference = computed(() =>
     this.dailyIdeal() > 0 ? Math.round((this.dailyAverage() / this.dailyIdeal() - 1) * 100) : 0,
   );

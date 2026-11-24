@@ -17,7 +17,6 @@ export class ReportsService {
 
   readonly totalExpense = computed(() => this.movements.monthExpense());
 
-  /** The biggest categories of the month, with the rest grouped as "Otros". */
   readonly byCategory = computed<Share[]>(() => {
     const totals = new Map<string, number>();
     for (const movement of this.expenses()) {
@@ -56,7 +55,6 @@ export class ReportsService {
     });
   });
 
-  /** Income and expenses of the last six months, the current one last. */
   readonly history = computed<MonthTotals[]>(() => {
     const today = new Date();
     const monthName = new Intl.DateTimeFormat('es-CO', { month: 'short' });

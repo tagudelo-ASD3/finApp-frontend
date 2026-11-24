@@ -7,7 +7,6 @@ import { PageHeader } from '../../../../shared/components/page-header/page-heade
 import { CopCurrencyPipe } from '../../../../shared/pipes/cop-currency.pipe';
 import { ReportsService } from '../../../../core/services/reports.service';
 
-/** Colors of the category donut, in the same order as the categories. */
 const SLICE_COLORS = ['var(--primary)', 'var(--accent)', 'var(--warn)', 'var(--good)', 'var(--surface-3)'];
 const DONUT_RADIUS = 52;
 
@@ -24,7 +23,6 @@ export class Reports {
   protected readonly today = new Date();
   protected readonly radius = DONUT_RADIUS;
 
-  /** Donut slices built with stroke-dasharray over the circle circumference. */
   protected readonly slices = computed(() => {
     const circumference = 2 * Math.PI * DONUT_RADIUS;
     const total = this.reports.byCategory().reduce((sum, share) => sum + share.amount, 0) || 1;

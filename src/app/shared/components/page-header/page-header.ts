@@ -5,7 +5,6 @@ import { UiService } from '../../../core/services/ui.service';
 import { NotificationsService } from '../../../core/services/notifications.service';
 import { Icon } from '../icon/icon';
 
-/** Page title with the search box, notifications bell and the page's own action buttons. */
 @Component({
   selector: 'fa-page-header',
   imports: [RouterLink, TranslatePipe, Icon],

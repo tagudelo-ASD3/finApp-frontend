@@ -1,4 +1,3 @@
-// Line icons drawn on a 24×24 grid, in the style of the wireframe.
 export const ICON_PATHS: Record<string, string[]> = {
   home: ['M3 10.5 12 3l9 7.5', 'M5 9.5V21h14V9.5', 'M9.5 21v-6h5v6'],
   movements: ['M8 3 4 7l4 4', 'M4 7h16', 'M16 21l4-4-4-4', 'M20 17H4'],

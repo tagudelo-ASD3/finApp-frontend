@@ -1,7 +1,6 @@
 import { Movement } from '../app/core/models/movement.model';
 import { dayOfThisMonth, daysAgo } from './mock-dates';
 
-// Expenses of the current month add up to $ 1.914.400, the figure used in the wireframe.
 export const MOVEMENTS_MOCK: Movement[] = [
   { id: 'm01', type: 'expense', amount: 86400, description: 'Mercado Éxito', accountId: 'nequi', categoryId: 'groceries', date: daysAgo(0, 19, 42), source: 'auto' },
   { id: 'm02', type: 'income', amount: 3200000, description: 'Salario', accountId: 'bancolombia', categoryId: 'income', date: daysAgo(1, 8, 5), source: 'auto' },

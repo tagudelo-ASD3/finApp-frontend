@@ -90,7 +90,7 @@
         <section class="card next-payment">
           <div class="days">
             <strong>{{ next.daysLeft }}</strong>
-            <span>{{ 'common.days' | translate }}</span>
+            <span>{{ 'common.days' | countKey: next.daysLeft | translate }}</span>
           </div>
           <div class="stack grow">
             <span class="faint">{{ 'dashboard.nextPayment' | translate }} · {{ next.date | date: 'd MMM' }}</span>
@@ -101,7 +101,7 @@
         </section>
       }
 
-      @if (suggestion(); as tip) {
+      @if (debts.suggestion(); as tip) {
         <section class="card card--soft tip">
           <div class="row">
             <span class="icon-tile icon-tile--surface"><fa-icon name="sparkles" [size]="18" /></span>
@@ -115,7 +115,7 @@
       }
     </div>
 
-    <div class="column">
+    <div class="column summary">
       <section class="card">
         <div class="card__header">
           <h2>{{ 'dashboard.budgetOf' | translate: { month: (today | date: 'MMMM') } }}</h2>

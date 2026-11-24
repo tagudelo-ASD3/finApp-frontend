@@ -8,10 +8,6 @@ export class ProfileService {
   readonly profile = persistedSignal<UserProfile>('profile', USER_PROFILE_MOCK);
   readonly preferences = persistedSignal<UserPreferences>('preferences', USER_PREFERENCES_MOCK);
 
-  updateProfile(changes: Partial<UserProfile>): void {
-    this.profile.update((profile) => ({ ...profile, ...changes }));
-  }
-
   togglePreference(key: TogglePreference): void {
     this.preferences.update((preferences) => ({ ...preferences, [key]: !preferences[key] }));
   }

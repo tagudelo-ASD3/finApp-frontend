@@ -1,17 +1,18 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CountKeyPipe } from '../../../../shared/pipes/count-key.pipe';
 import { UiService } from '../../../../core/services/ui.service';
 import { Icon } from '../../../../shared/components/icon/icon';
 import { PageHeader } from '../../../../shared/components/page-header/page-header';
 import { CopCurrencyPipe } from '../../../../shared/pipes/cop-currency.pipe';
 import { daysInMonth, isSameDay } from '../../../../core/utils/date.utils';
-import { CalendarDay, ScheduledPayment } from '../../../../core/models/debt.model';
+import { CalendarDay } from '../../../../core/models/debt.model';
 import { DebtsService } from '../../../../core/services/debts.service';
 
 @Component({
   selector: 'fa-payment-calendar',
-  imports: [DatePipe, TranslatePipe, Icon, PageHeader, CopCurrencyPipe],
+  imports: [DatePipe, TranslatePipe, Icon, PageHeader, CopCurrencyPipe, CountKeyPipe],
   templateUrl: './payment-calendar.html',
   styleUrl: './payment-calendar.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,7 +30,6 @@ export class PaymentCalendar {
 
   protected readonly monthTotal = computed(() => this.payments().reduce((total, payment) => total + payment.amount, 0));
 
-  /** Six weeks starting on Monday, so every month fits the same grid. */
   protected readonly days = computed<CalendarDay[]>(() => {
     const first = this.month();
     const today = new Date();

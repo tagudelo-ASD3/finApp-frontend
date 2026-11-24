@@ -22,7 +22,6 @@ export class MovementDetail {
   protected readonly movements = inject(MovementsService);
   protected readonly accounts = inject(AccountsService);
 
-  /** Route parameter :id. */
   readonly id = input.required<string>();
 
   protected readonly movement = computed(() => this.movements.byId(this.id()));

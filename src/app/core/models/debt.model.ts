@@ -36,12 +36,10 @@ export interface PaymentPlan {
   months: number;
   totalInterest: number;
   order: Debt[];
-  /** Total debt left at the end of each month, starting with the current balance. */
   balances: number[];
   feasible: boolean;
 }
 
-/** One upcoming installment split into interest and principal. */
 export interface InstallmentRow {
   date: Date;
   payment: number;
@@ -50,10 +48,24 @@ export interface InstallmentRow {
   balance: number;
 }
 
-/** Cell of the payment calendar. */
 export interface CalendarDay {
   date: Date;
   inMonth: boolean;
   isToday: boolean;
   payments: ScheduledPayment[];
+}
+
+export type NewDebt = Omit<Debt, 'id' | 'initials' | 'originalAmount'>;
+
+export type PlanComparison = Record<PlanStrategy | 'minimum', PaymentPlan>;
+
+export interface PlanSuggestion {
+  extra: number;
+  debtName: string;
+  savings: number;
+}
+
+export interface DebtBalance {
+  debt: Debt;
+  balance: number;
 }
