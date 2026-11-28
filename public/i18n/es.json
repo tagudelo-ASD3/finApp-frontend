@@ -384,6 +384,8 @@
     "title": "Cómo se construyó FinApp",
     "text": "FinApp es una aplicación web de finanzas personales para registrar gastos automáticamente, controlar el presupuesto y salir de deudas con un plan. Este sitio es el prototipo funcional del frontend, construido a partir del wireframe diseñado en la actividad anterior.",
     "videoTitle": "Video de demostración",
+    "videoText": "En el video se muestra el sitio funcionando y se explica cómo se construyó, desde el wireframe hasta la publicación. Se abre con la cuenta institucional de la Ibero.",
+    "videoLink": "Ver el video",
     "videoPending": "Aquí irá el video donde se muestra el sitio y se explica cómo se construyó.",
     "processTitle": "Proceso de construcción",
     "steps": {

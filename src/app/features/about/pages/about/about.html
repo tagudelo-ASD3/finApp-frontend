@@ -18,17 +18,15 @@
       <h2>{{ 'about.videoTitle' | translate }}</h2>
       <fa-icon name="video" />
     </div>
-    @if (videoUrl) {
-      <div class="video">
-        <iframe [src]="videoUrl" [title]="'about.videoTitle' | translate" allowfullscreen
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
-      </div>
-    } @else {
-      <div class="video video--placeholder">
-        <fa-icon name="video" [size]="40" />
+    <div class="video video--placeholder">
+      <fa-icon name="video" [size]="40" />
+      @if (videoUrl) {
+        <p class="muted">{{ 'about.videoText' | translate }}</p>
+        <a class="btn btn--primary" [href]="videoUrl" target="_blank" rel="noopener">{{ 'about.videoLink' | translate }}</a>
+      } @else {
         <p class="muted">{{ 'about.videoPending' | translate }}</p>
-      </div>
-    }
+      }
+    </div>
   </section>
 
   <div class="grid grid--side-main">

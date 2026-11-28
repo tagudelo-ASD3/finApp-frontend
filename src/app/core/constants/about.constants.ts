@@ -1,7 +1,7 @@
 import { Tool } from '../models/tool.model';
 
-// YouTube video id: from https://youtu.be/AbC123xyz the id is AbC123xyz.
-export const DEMO_VIDEO_ID = '';
+// Demo video shared from the university OneDrive (SharePoint links can't be embedded, so the page links to it).
+export const DEMO_VIDEO_URL = 'https://laiberocol-my.sharepoint.com/:v:/g/personal/tagudelo_estudiante_ibero_edu_co/IQB18bVztakJRIM_7L9fz2f3AdqR_9ChvQn-YBj_IXiDZK8?e=IdZdWV';
 
 export const REPOSITORY_URL = 'https://github.com/tagudelo-ASD3/finApp-frontend';
 

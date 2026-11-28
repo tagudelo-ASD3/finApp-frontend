@@ -266,14 +266,14 @@ El `.scss` de cada componente solo tiene lo que es propio de esa pantalla. Para 
 
 ## 🎬 Video de demostración
 
-Cuando el video esté en YouTube, pega su ID en `src/app/core/constants/about.constants.ts`:
+El enlace del video está en `src/app/core/constants/about.constants.ts`:
 
 ```ts
-// De https://youtu.be/AbC123xyz el ID es AbC123xyz
-export const DEMO_VIDEO_ID = 'AbC123xyz';
+// Enlace compartido desde OneDrive de la Ibero
+export const DEMO_VIDEO_URL = 'https://laiberocol-my.sharepoint.com/...';
 ```
 
-El video aparece en la página **Cómo se construyó** (`/#/about`).
+El botón para verlo aparece en la página **Cómo se construyó** (`/#/about`).
 
 ## 🌐 Publicación
 
