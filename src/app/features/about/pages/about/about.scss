@@ -45,6 +45,8 @@
   align-items: center;
   justify-content: center;
   gap: 12px;
+  aspect-ratio: auto;
+  min-height: 220px;
   padding: 24px;
   color: var(--ink-3);
   text-align: center;
